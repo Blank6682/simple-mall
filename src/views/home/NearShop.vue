@@ -2,11 +2,13 @@
     <div class="near-shop">
         <div class="shop-list">
             <div class="shop-list-title">附件店铺</div>
-            <ShopInfo
+            <router-link
                 v-for="item in nearShopList"
+                :to="`/shop/${item._id}`"
                 :key="item._id"
-                :item="item"
-            />
+            >
+                <ShopInfo :item="item"
+            /></router-link>
         </div>
     </div>
 </template>
@@ -21,7 +23,6 @@ const useNearShopListEffter = () => {
     const nearShopList = ref([]);
     const getNearShopList = async () => {
         const result = await get("/api/shop/hot-list")
-        console.log(result)
         if (result?.errno === 0 && result?.data?.length) {
             nearShopList.value = result.data
         }
@@ -48,6 +49,9 @@ export default {
         font-weight: bold;
         line-height: 25px;
         margin: 16px 0 2px 0;
+    }
+    a {
+        text-decoration: none;
     }
 }
 </style>

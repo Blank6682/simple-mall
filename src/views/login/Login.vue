@@ -26,6 +26,7 @@ import Toast, { useToastEffect } from '../../components/Toast.vue';
 
 //处理登录逻辑
 const useLoginEffect = (showToast) => {
+    const router = useRouter();
     const data = reactive({
         mobile: '',
         password: '',
@@ -33,7 +34,7 @@ const useLoginEffect = (showToast) => {
     const handleLogin = async () => {
         try {
             const result = await post('/api/user/login', {
-                mebile: data.mobile,
+                username: data.mobile,
                 password: data.password
             })
             if (result?.errno === 0) {
