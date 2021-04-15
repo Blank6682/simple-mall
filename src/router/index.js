@@ -8,11 +8,6 @@ const routes = [
         component: Home
     },
     {
-        path: '/about',
-        name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    },
-    {
         path: '/login',
         name: 'Login',
         //异步路由加载
