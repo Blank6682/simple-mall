@@ -19,7 +19,7 @@ import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo'
 
 //处理获取附近店铺数据的逻辑
-const useNearShopListEffter = () => {
+const useNearShopListEffect = () => {
     const nearShopList = ref([]);
     const getNearShopList = async () => {
         const result = await get("/api/shop/hot-list")
@@ -34,7 +34,7 @@ export default {
     name: "NearShop",
     components: { ShopInfo },
     setup () {
-        const { getNearShopList, nearShopList } = useNearShopListEffter()
+        const { getNearShopList, nearShopList } = useNearShopListEffect()
         getNearShopList();
         return { nearShopList }
     }

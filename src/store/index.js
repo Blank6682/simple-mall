@@ -7,8 +7,8 @@ export default createStore({
         shopCartList: {}
     },
     mutations: {
-        addItemToShopCart (state, payload) {
-            const { shopId, productId, productInfo } = payload
+        changeShopCartItemInfo (state, payload) {
+            const { shopId, productId, productInfo, num } = payload
             //商店信息
             let shopInfo = state.shopCartList[shopId]
             if (!shopInfo) {
@@ -18,18 +18,18 @@ export default createStore({
             let product = shopInfo[productId]
             if (!product) {
                 product = productInfo //不存在则把商品信息添加进去
+                console.log(product)
                 product.count = 0
             }
 
-            product.count += 1
+            product.count += num
+            if (product.count < 0) {
+                product.count = 0
+            }
             //把信息添加到shopCartList
             shopInfo[productId] = product
             state.shopCartList[shopId] = shopInfo
         },
-        minusItemToShopCart (state, payload) {
-            const { shopId, productId } = payload
-            state.shopCartList[shopId][productId].count--;
-        }
     },
     actions: {
     },

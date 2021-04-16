@@ -44,7 +44,6 @@ export default {
         margin-bottom: 6px;
         font-size: 10px;
     }
-
     .iconfont {
         margin: 5px 0 2px;
         font-size: 20px;

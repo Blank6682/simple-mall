@@ -1,3 +1,4 @@
-html{
-    /* font-size: 100px; */
+html,h3,p{
+    margin: 0;
+    padding: 0;
 }

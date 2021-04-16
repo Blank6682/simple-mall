@@ -14,14 +14,6 @@
             <ShopInfo :item="item" :hideBorder="true" />
         </div>
         <Content />
-        <!-- 购物车详情弹出 -->
-        <!-- <div class="cart-popup">
-            <div class="cart-header">
-                <input type="checkbox" />全选
-                <div class="cart-header-del">清空购物车</div>
-            </div>
-            <div class="cart-list"></div>
-        </div> -->
         <ShopCart></ShopCart>
         <Toast v-if="isShow" :message="toastMessage"></Toast>
     </div>
@@ -37,7 +29,7 @@ import Content from './Content'
 import ShopCart from './ShopCart.vue'
 
 //处理获取商店信息逻辑
-const uesShopInfoEffter = (showToast) => {
+const uesShopInfoEffect = (showToast) => {
     // route可以获取路由中的数据
     const route = useRoute();
     const data = reactive({ item: {} })
@@ -54,7 +46,7 @@ const uesShopInfoEffter = (showToast) => {
 }
 
 //返回主页逻辑
-const useBackRouterEffter = () => {
+const useBackRouterEffect = () => {
     const router = useRouter();
     const handleBackClick = () => {
         router.push({ name: 'Home' })
@@ -64,13 +56,9 @@ const useBackRouterEffter = () => {
 export default {
     components: { ShopInfo, Toast, Content, ShopCart },
     setup () {
-        // const totalPrice = shopList.reduce(function (total, item) {
-        //     return total + item.price * item.count;
-        // }, 0)
-
         const { isShow, toastMessage, showToast } = useToastEffect();
-        const { handleBackClick } = useBackRouterEffter();
-        const { item, getShopInfo } = uesShopInfoEffter(showToast);
+        const { handleBackClick } = useBackRouterEffect();
+        const { item, getShopInfo } = uesShopInfoEffect(showToast);
         getShopInfo()
         return {
             item, toastMessage, isShow,
@@ -95,7 +83,7 @@ export default {
     &-search {
         display: flex;
         align-items: center;
-        width: 310px;
+        width: 100%;
         height: 32px;
         border-radius: 16px;
         background: $search-bgColor;

@@ -23,34 +23,35 @@
                     <h3 class="product-details-name">{{ item.name }}</h3>
                     <p class="product-details-sales">月售{{ item.sales }}</p>
                     <div class="product-details-price">
-                        <div class="product-details-price-now">
-                            <span>￥</span>{{ item.price }}
-                        </div>
+                        <p class="product-details-price-now">
+                            <span>&yen;</span>{{ item.price }}
+                        </p>
                         <span class="product-details-price-old">
-                            ￥{{ item.oldPrice }}
+                            &yen;{{ item.oldPrice }}
                         </span>
                     </div>
                 </div>
                 <div class="product-count">
-                    <div
+                    <span
                         class="product-count-mius iconfont"
-                        v-if="shopCartList?.[shopId]?.[item._id]?.count"
-                        @click="minusItemToShopCart(shopId, item._id, item)"
+                        v-if="item.count"
+                        @click="
+                            changeShopCartItemInfo(shopId, item._id, item, -1)
+                        "
                     >
                         &#xe60b;
-                    </div>
-                    <span
-                        v-if="shopCartList?.[shopId]?.[item._id]?.count"
-                        class="product-count-number"
-                    >
-                        {{ shopCartList?.[shopId]?.[item._id]?.count }}
                     </span>
-                    <div
+                    <span v-if="item.count" class="product-count-number">
+                        {{ item.count }}
+                    </span>
+                    <span
                         class="product-count-plus iconfont"
-                        @click="addItemToShopCart(shopId, item._id, item)"
+                        @click="
+                            changeShopCartItemInfo(shopId, item._id, item, 1)
+                        "
                     >
                         &#xe61e;
-                    </div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -61,7 +62,7 @@
 import { reactive, ref, toRefs, watchEffect } from 'vue'
 import { get } from '../../utils/request'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { useShopCartEffect } from './ShopCartEffect'
 
 //tab列表
 const tabList = [
@@ -71,7 +72,7 @@ const tabList = [
 ]
 
 //列表相关逻辑
-const useShopListEffter = (currentTab, shopId) => {
+const useShopListEffect = (currentTab, shopId) => {
     const data = reactive({ goodsList: [] })
     //获取商品列表
     const getGoodsList = async () => {
@@ -86,7 +87,7 @@ const useShopListEffter = (currentTab, shopId) => {
 }
 
 //tab切换逻辑
-const useTagEffter = () => {
+const useTagEffect = () => {
     const currentTab = ref(tabList[0].tab);
     const handleTabClick = (tab) => {
         currentTab.value = tab
@@ -94,21 +95,7 @@ const useTagEffter = () => {
     return { currentTab, handleTabClick }
 }
 
-//购物车相关逻辑
-const useShopCartEffter = () => {
-    const store = useStore()
-    const { shopCartList } = toRefs(store.state)
 
-    const addItemToShopCart = (shopId, productId, productInfo) => {
-        //提交addItemToShopCart事件 可以同步修改store的数据
-        store.commit("addItemToShopCart", { shopId, productId, productInfo })
-    }
-    const minusItemToShopCart = (shopId, productId) => {
-        store.commit("minusItemToShopCart", { shopId, productId })
-    }
-
-    return { shopCartList, addItemToShopCart, minusItemToShopCart }
-}
 export default {
     name: "Content",
     setup () {
@@ -117,12 +104,12 @@ export default {
         const shopId = route.params.id
 
         //逻辑处理
-        const { currentTab, handleTabClick } = useTagEffter();
-        const { goodsList } = useShopListEffter(currentTab, shopId);
-        const { shopCartList, addItemToShopCart, minusItemToShopCart } = useShopCartEffter()
+        const { currentTab, handleTabClick } = useTagEffect();
+        const { goodsList } = useShopListEffect(currentTab, shopId);
+        const { changeShopCartItemInfo } = useShopCartEffect()
         return {
             goodsList, tabList, currentTab, handleTabClick,
-            shopCartList, addItemToShopCart, minusItemToShopCart, shopId,
+            changeShopCartItemInfo, shopId,
         }
     }
 }
@@ -154,14 +141,13 @@ export default {
     //商品信息
     .product {
         flex: 1;
-        margin: 0 18px 0 16px;
+        margin: 0 10px 0 16px;
         overflow-y: scroll;
         &-item {
             position: relative;
             display: flex;
             align-items: center;
             padding-bottom: 18px;
-            font-size: 14px;
             border-bottom: 1px solid #f1f1f1;
             margin: 12px 0;
             &-img {
@@ -175,7 +161,6 @@ export default {
             &-name {
                 font-weight: 550;
                 font-size: 14px;
-                margin: 0;
             }
             &-sales {
                 font-size: 12px;
@@ -194,6 +179,7 @@ export default {
             }
             &-price-old {
                 display: inline-block;
+                text-decoration: line-through;
                 color: #999999;
                 font-size: 10px;
                 line-height: 20px;
@@ -201,23 +187,26 @@ export default {
         }
         &-count {
             position: absolute;
-            display: flex;
-            bottom: 18px;
+            bottom: 0;
             right: 0;
+            margin-bottom: 18px;
             &-mius,
             &-plus {
-                width: 20px;
-                height: 20px;
+                display: inline-block;
                 font-size: 14px;
                 text-align: center;
                 border-radius: 50%;
             }
             &-mius {
                 box-sizing: border-box;
+                width: 18px;
+                height: 18px;
                 color: #666666;
-                border: 1.8px solid #666666;
+                border: 1px solid #666666;
             }
             &-plus {
+                width: 20px;
+                height: 20px;
                 line-height: 20px;
                 background-color: #0091ff;
                 color: #fff;
