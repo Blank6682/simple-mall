@@ -10,7 +10,11 @@
             </div>
             <template v-for="item in productList" :key="item.id">
                 <div class="product-item" v-if="item.count">
-                    <input type="checkbox" />
+                    <div
+                        class="product-item-checked iconfont"
+                        v-html="item.checked ? '&#xe77b;' : '&#xe645;'"
+                        @click="changeCartItemChecked(shopId, item._id)"
+                    ></div>
                     <img class="product-item-img" :src="item.imgUrl" />
                     <div class="product-details">
                         <h3 class="product-details-name">{{ item.name }}</h3>
@@ -28,12 +32,7 @@
                             class="product-count-mius iconfont"
                             v-if="item.count"
                             @click="
-                                changeShopCartItemInfo(
-                                    shopId,
-                                    item._id,
-                                    item,
-                                    -1
-                                )
+                                changeCartItemInfo(shopId, item._id, item, -1)
                             "
                         >
                             &#xe60b;
@@ -44,12 +43,7 @@
                         <span
                             class="product-count-plus iconfont"
                             @click="
-                                changeShopCartItemInfo(
-                                    shopId,
-                                    item._id,
-                                    item,
-                                    1
-                                )
+                                changeCartItemInfo(shopId, item._id, item, 1)
                             "
                         >
                             &#xe61e;
@@ -91,7 +85,9 @@ const useShopCartInfoEffect = (shopId) => {
         if (productList) {
             for (let i in productList) {
                 const product = productList[i]
-                count += product.count;
+                if (product.checked) {
+                    count += product.count;
+                }
             }
         }
         return count
@@ -103,30 +99,43 @@ const useShopCartInfoEffect = (shopId) => {
         if (productList) {
             for (let i in productList) {
                 const product = productList[i]
-                price += (product.count * product.price);
+                if (product.checked) {
+                    price += (product.count * product.price);
+                }
             }
         }
         //取一位小数点处理
         return price.toFixed((1));
     })
+    //商品选中
+    const changeCartItemChecked = (shopId, productId) => {
+        //提交changeCartItemChecked事件 可以同步修改store的数据
+        store.commit("changeCartItemChecked", { shopId, productId })
+    }
+
+    const changeCartCheckedAll = () => {
+
+    }
+
     //商品列表
     const productList = computed(() => {
         const productList = shopCartList[shopId] || []
         return productList
     })
-    return { total, price, productList }
+    return { total, price, productList, changeCartItemChecked }
 }
+
 export default {
     name: "ShopCart",
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
-        const { total, price, productList } = useShopCartInfoEffect(shopId);
-        const { changeShopCartItemInfo } = useShopCartEffect()
+        const { total, price, productList, changeCartItemChecked } = useShopCartInfoEffect(shopId);
+        const { changeCartItemInfo } = useShopCartEffect()
 
         return {
-            total, price, productList,
-            changeShopCartItemInfo
+            total, price, productList, shopId,
+            changeCartItemInfo, changeCartItemChecked
         }
     },
 }
@@ -134,14 +143,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
-// .shopcart {
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     right: 0;
-//     background: rgba(0, 0, 0, 0.5);
-// }
 .check {
     position: absolute;
     display: flex;
@@ -196,12 +197,12 @@ export default {
     }
 }
 .product {
+    overflow-y: scroll;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     margin-bottom: 49px;
-    overflow-y: scroll;
     width: 100%;
     background: #fff;
     &-header {
@@ -223,6 +224,10 @@ export default {
         display: flex;
         align-items: center;
         margin: 0 18px 16px;
+        &-checked {
+            font-size: 20px;
+            color: #0091ff;
+        }
         &-img {
             width: 46px;
             height: 46px;

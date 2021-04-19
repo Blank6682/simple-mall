@@ -35,9 +35,7 @@
                     <span
                         class="product-count-mius iconfont"
                         v-if="item.count"
-                        @click="
-                            changeShopCartItemInfo(shopId, item._id, item, -1)
-                        "
+                        @click="changeCartItemInfo(shopId, item._id, item, -1)"
                     >
                         &#xe60b;
                     </span>
@@ -46,9 +44,7 @@
                     </span>
                     <span
                         class="product-count-plus iconfont"
-                        @click="
-                            changeShopCartItemInfo(shopId, item._id, item, 1)
-                        "
+                        @click="changeCartItemInfo(shopId, item._id, item, 1)"
                     >
                         &#xe61e;
                     </span>
@@ -106,10 +102,10 @@ export default {
         //逻辑处理
         const { currentTab, handleTabClick } = useTagEffect();
         const { goodsList } = useShopListEffect(currentTab, shopId);
-        const { changeShopCartItemInfo } = useShopCartEffect()
+        const { changeCartItemInfo } = useShopCartEffect()
         return {
             goodsList, tabList, currentTab, handleTabClick,
-            changeShopCartItemInfo, shopId,
+            changeCartItemInfo, shopId,
         }
     }
 }
