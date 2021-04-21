@@ -15,7 +15,6 @@ export default createStore({
         //商品的增减
         changeCartItemInfo (state, payload) {
             const { shopId, productId, productInfo, num } = payload
-            console.log("🚀 ~ file: index.js ~ line 18 ~ changeCartItemInfo ~ productId", productId)
             //商店信息
             let shopInfo = state.shopCartList[shopId]
             if (!shopInfo) {
@@ -44,6 +43,19 @@ export default createStore({
             const { shopId, productId } = payload
             let shopInfo = state.shopCartList[shopId]
             shopInfo[productId].checked = !shopInfo[productId].checked
+        },
+        //清空购物车
+        clearCartProducts (state, payload) {
+            const { shopId } = payload
+            state.shopCartList[shopId] = {};
+        },
+        //全选
+        changeCartProductsChecked (state, payload) {
+            let data = JSON.parse(JSON.stringify(payload))
+            let cartList = state.shopCartList[data.shopId];
+            for (let i in cartList) {
+                cartList[i].checked = data.isCheckedAll;
+            }
         }
     },
     actions: {

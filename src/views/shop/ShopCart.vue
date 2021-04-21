@@ -1,59 +1,85 @@
 <template>
     <div class="shopcart">
-        <!-- 商品列表-->
-        <div class="product">
-            <div class="product-header">
-                <div class="product-header-checked">
-                    <input type="checkbox" />全选
-                </div>
-                <div class="product-header-Empty">清空购物车</div>
-            </div>
-            <template v-for="item in productList" :key="item.id">
-                <div class="product-item" v-if="item.count">
+        <div class="warper" v-if="isShow" @click="showShopCart()">
+            <div class="product">
+                <div class="product-header">
+                    <div class="product-header-checked">
+                        <span
+                            class="product-header-icon iconfont"
+                            v-html="isCheckedAll ? '&#xe77b;' : '&#xe670;'"
+                            @click="
+                                changeCartProductsChecked(shopId, isCheckedAll)
+                            "
+                        ></span>
+                        全选
+                    </div>
                     <div
-                        class="product-item-checked iconfont"
-                        v-html="item.checked ? '&#xe77b;' : '&#xe645;'"
-                        @click="changeCartItemChecked(shopId, item._id)"
-                    ></div>
-                    <img class="product-item-img" :src="item.imgUrl" />
-                    <div class="product-details">
-                        <h3 class="product-details-name">{{ item.name }}</h3>
-                        <div class="product-price">
-                            <p class="product-price-now">
-                                <span>&yen;</span>{{ item.price }}
-                            </p>
-                            <span class="product-price-old">
-                                &yen;{{ item.oldPrice }}
+                        class="product-header-Empty"
+                        @click="clearCartProducts(shopId)"
+                    >
+                        清空购物车
+                    </div>
+                </div>
+                <!-- 商品列表-->
+                <template v-for="item in productList" :key="item.id">
+                    <div class="product-item" v-if="item.count">
+                        <div
+                            class="product-item-checked iconfont"
+                            v-html="item.checked ? '&#xe77b;' : '&#xe670;'"
+                            @click="changeCartItemChecked(shopId, item._id)"
+                        ></div>
+                        <img class="product-item-img" :src="item.imgUrl" />
+                        <div class="product-details">
+                            <h3 class="product-details-name">
+                                {{ item.name }}
+                            </h3>
+                            <div class="product-price">
+                                <p class="product-price-now">
+                                    <span>&yen;</span>{{ item.price }}
+                                </p>
+                                <span class="product-price-old">
+                                    &yen;{{ item.oldPrice }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="product-count">
+                            <span
+                                class="product-count-mius iconfont"
+                                v-if="item.count"
+                                @click="
+                                    changeCartItemInfo(
+                                        shopId,
+                                        item._id,
+                                        item,
+                                        -1
+                                    )
+                                "
+                            >
+                                &#xe60b;
+                            </span>
+                            <span class="product-count-number">
+                                {{ item.count }}
+                            </span>
+                            <span
+                                class="product-count-plus iconfont"
+                                @click="
+                                    changeCartItemInfo(
+                                        shopId,
+                                        item._id,
+                                        item,
+                                        1
+                                    )
+                                "
+                            >
+                                &#xe61e;
                             </span>
                         </div>
                     </div>
-                    <div class="product-count">
-                        <span
-                            class="product-count-mius iconfont"
-                            v-if="item.count"
-                            @click="
-                                changeCartItemInfo(shopId, item._id, item, -1)
-                            "
-                        >
-                            &#xe60b;
-                        </span>
-                        <span class="product-count-number">
-                            {{ item.count }}
-                        </span>
-                        <span
-                            class="product-count-plus iconfont"
-                            @click="
-                                changeCartItemInfo(shopId, item._id, item, 1)
-                            "
-                        >
-                            &#xe61e;
-                        </span>
-                    </div>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
         <div class="check">
-            <div class="check-cart">
+            <div class="check-cart" @click="showShopCart()">
                 <span class="check-cart-icon iconfont">&#xe605;</span>
                 <div class="check-cart-count" v-if="total">{{ total }}</div>
             </div>
@@ -68,7 +94,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useShopCartEffect } from './ShopCartEffect'
@@ -107,22 +133,49 @@ const useShopCartInfoEffect = (shopId) => {
         //取一位小数点处理
         return price.toFixed((1));
     })
+
+    //是否全选状态
+    const isCheckedAll = computed(() => {
+        const productList = shopCartList[shopId];
+        let isCheckedAll = false;
+        if (productList) {
+            for (let i in productList) {
+                if (productList[i].checked) {
+                    isCheckedAll = true
+                } else {
+                    isCheckedAll = false
+                    return isCheckedAll
+                }
+            }
+        }
+        return isCheckedAll
+    })
+
     //商品选中
     const changeCartItemChecked = (shopId, productId) => {
         //提交changeCartItemChecked事件 可以同步修改store的数据
         store.commit("changeCartItemChecked", { shopId, productId })
     }
 
-    const changeCartCheckedAll = () => {
-
+    //购物车全选   
+    const changeCartProductsChecked = (shopId, isCheckedAll) => {
+        isCheckedAll = !isCheckedAll
+        store.commit("changeCartProductsChecked", { shopId, isCheckedAll })
     }
 
+    //清空购物车
+    const clearCartProducts = (shopId) => {
+        store.commit("clearCartProducts", { shopId })
+    }
     //商品列表
     const productList = computed(() => {
         const productList = shopCartList[shopId] || []
         return productList
     })
-    return { total, price, productList, changeCartItemChecked }
+    return {
+        total, price, productList, isCheckedAll,
+        changeCartItemChecked, clearCartProducts, changeCartProductsChecked
+    }
 }
 
 export default {
@@ -130,12 +183,17 @@ export default {
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
-        const { total, price, productList, changeCartItemChecked } = useShopCartInfoEffect(shopId);
+        const { total, price, productList, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, isCheckedAll } = useShopCartInfoEffect(shopId);
         const { changeCartItemInfo } = useShopCartEffect()
+        const isShow = ref(false)
+        const showShopCart = () => {
+            isShow.value = !isShow.value
+        }
 
         return {
-            total, price, productList, shopId,
-            changeCartItemInfo, changeCartItemChecked
+            total, price, productList, shopId, changeCartItemInfo,
+            changeCartItemChecked, clearCartProducts, changeCartProductsChecked,
+            isCheckedAll, showShopCart, isShow
         }
     },
 }
@@ -143,6 +201,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
+.warper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+}
 .check {
     position: absolute;
     display: flex;
@@ -215,7 +281,10 @@ export default {
         line-height: 20px;
         color: $content-fontcolor;
         border-bottom: 1px solid #f1f1f1;
-        input[type="checkbox"] {
+        vertical-align: top;
+        &-icon {
+            font-size: 20px;
+            color: #0091ff;
             margin-right: 8px;
         }
     }

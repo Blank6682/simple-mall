@@ -34,13 +34,14 @@
                 <div class="product-count">
                     <span
                         class="product-count-mius iconfont"
-                        v-if="item.count"
+                        v-if="shopCartList?.[shopId]?.[item._id]?.count"
                         @click="changeCartItemInfo(shopId, item._id, item, -1)"
                     >
                         &#xe60b;
                     </span>
+                    <!-- 显示的是购物车的商品数量 -->
                     <span v-if="item.count" class="product-count-number">
-                        {{ item.count }}
+                        {{ shopCartList?.[shopId]?.[item._id]?.count }}
                     </span>
                     <span
                         class="product-count-plus iconfont"
@@ -56,8 +57,8 @@
 
 <script>
 import { reactive, ref, toRefs, watchEffect } from 'vue'
-import { get } from '../../utils/request'
 import { useRoute } from 'vue-router'
+import { get } from '../../utils/request'
 import { useShopCartEffect } from './ShopCartEffect'
 
 //tab列表
@@ -102,10 +103,10 @@ export default {
         //逻辑处理
         const { currentTab, handleTabClick } = useTagEffect();
         const { goodsList } = useShopListEffect(currentTab, shopId);
-        const { changeCartItemInfo } = useShopCartEffect()
+        const { changeCartItemInfo, shopCartList } = useShopCartEffect()
         return {
             goodsList, tabList, currentTab, handleTabClick,
-            changeCartItemInfo, shopId,
+            changeCartItemInfo, shopId, shopCartList
         }
     }
 }
