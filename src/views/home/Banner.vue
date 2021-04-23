@@ -72,7 +72,7 @@ export default {
     }
 }
 .border-line {
-    margin: 0 -25px;
+    margin: 0 -18px;
     height: 10px;
     background: #f1f1f1;
 }

@@ -1,10 +1,8 @@
 <template>
     <div class="wraper">
-        <div class="">
-            <Header />
-            <Banner />
-            <NearShop />
-        </div>
+        <Header />
+        <Banner />
+        <NearShop />
         <FooterTapBar></FooterTapBar>
     </div>
 </template>

@@ -1,4 +1,7 @@
-html,h3,p{
+html,body,h3,p{
     margin: 0;
     padding: 0;
+}
+a{
+    text-decoration: none;
 }

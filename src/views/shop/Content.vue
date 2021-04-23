@@ -34,18 +34,46 @@
                 <div class="product-count">
                     <span
                         class="product-count-mius iconfont"
-                        v-if="shopCartList?.[shopId]?.[item._id]?.count"
-                        @click="changeCartItemInfo(shopId, item._id, item, -1)"
+                        v-if="
+                            shopCartList?.[shopId]?.productList?.[item._id]
+                                ?.count
+                        "
+                        @click="
+                            changeCartItemInfo(
+                                shopId,
+                                item._id,
+                                item,
+                                -1,
+                                shopName
+                            )
+                        "
                     >
                         &#xe60b;
                     </span>
                     <!-- 显示的是购物车的商品数量 -->
-                    <span v-if="item.count" class="product-count-number">
-                        {{ shopCartList?.[shopId]?.[item._id]?.count }}
+                    <span
+                        v-if="
+                            shopCartList?.[shopId]?.productList?.[item._id]
+                                ?.count
+                        "
+                        class="product-count-number"
+                    >
+                        {{
+                            shopCartList?.[shopId]?.productList?.[item._id]
+                                ?.count
+                        }}
                     </span>
                     <span
                         class="product-count-plus iconfont"
-                        @click="changeCartItemInfo(shopId, item._id, item, 1)"
+                        @click="
+                            changeCartItemInfo(
+                                shopId,
+                                item._id,
+                                item,
+                                1,
+                                shopName
+                            )
+                        "
                     >
                         &#xe61e;
                     </span>
@@ -80,7 +108,7 @@ const useShopListEffect = (currentTab, shopId) => {
     }
     watchEffect(() => getGoodsList())
     const { goodsList } = toRefs(data)
-    return { getGoodsList, goodsList }
+    return { goodsList }
 }
 
 //tab切换逻辑
@@ -92,14 +120,13 @@ const useTagEffect = () => {
     return { currentTab, handleTabClick }
 }
 
-
 export default {
     name: "Content",
+    props: ["shopName"],
     setup () {
         //route获取商店ID
         const route = useRoute()
         const shopId = route.params.id
-
         //逻辑处理
         const { currentTab, handleTabClick } = useTagEffect();
         const { goodsList } = useShopListEffect(currentTab, shopId);

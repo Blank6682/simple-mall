@@ -4,9 +4,9 @@ import { useStore } from 'vuex'
 export const useShopCartEffect = () => {
     const store = useStore()
     const shopCartList = store.state.shopCartList
-    const changeCartItemInfo = (shopId, productId, productInfo, num) => {
+    const changeCartItemInfo = (shopId, productId, productInfo, num, shopName) => {
         //提交changeCartItemInfo事件 可以同步修改store的数据
-        store.commit("changeCartItemInfo", { shopId, productId, productInfo, num })
+        store.commit("changeCartItemInfo", { shopId, productId, productInfo, num, shopName })
     }
     return { changeCartItemInfo, shopCartList }
 }

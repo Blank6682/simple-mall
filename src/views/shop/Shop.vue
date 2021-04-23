@@ -13,9 +13,9 @@
         <div class="shop-info">
             <ShopInfo :item="item" :hideBorder="true" />
         </div>
-        <Content />
-        <ShopCart></ShopCart>
-        <Toast v-if="isShow" :message="toastMessage"></Toast>
+        <Content :shopName="item.name" />
+        <ShopCart />
+        <Toast v-if="isShow" :message="toastMessage" />
     </div>
 </template>
 

@@ -30,8 +30,8 @@ export default {
     position: fixed;
     display: flex;
     left: 0;
+    right: 0;
     bottom: 0;
-    width: 100vw;
     height: 49px;
     border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
     color: $content-fontcolor;

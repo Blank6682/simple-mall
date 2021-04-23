@@ -1,94 +1,99 @@
 <template>
     <div class="shopcart">
-        <div class="warper" v-if="isShow" @click="showShopCart()">
-            <div class="product">
-                <div class="product-header">
-                    <div class="product-header-checked">
-                        <span
-                            class="product-header-icon iconfont"
-                            v-html="isCheckedAll ? '&#xe77b;' : '&#xe670;'"
-                            @click="
-                                changeCartProductsChecked(shopId, isCheckedAll)
-                            "
-                        ></span>
-                        全选
-                    </div>
+        <div class="warper" v-if="isShow" @click="showShopCart()"></div>
+        <div class="product" v-if="isShow">
+            <div class="product-header">
+                <div class="product-header-checked">
+                    <span
+                        class="product-header-icon iconfont"
+                        v-html="
+                            Calculation.isCheckedAll ? '&#xe77b;' : '&#xe670;'
+                        "
+                        @click="
+                            changeCartProductsChecked(
+                                shopId,
+                                Calculation.isCheckedAll
+                            )
+                        "
+                    ></span>
+                    全选
+                </div>
+                <div
+                    class="product-header-Empty"
+                    @click="clearCartProducts(shopId)"
+                >
+                    清空购物车
+                </div>
+            </div>
+            <!-- 商品列表-->
+            <template v-for="item in productList" :key="item.id">
+                <div class="product-item" v-if="item.count">
                     <div
-                        class="product-header-Empty"
-                        @click="clearCartProducts(shopId)"
-                    >
-                        清空购物车
+                        class="product-item-checked iconfont"
+                        v-html="item.checked ? '&#xe77b;' : '&#xe670;'"
+                        @click="changeCartItemChecked(shopId, item._id)"
+                    ></div>
+                    <img class="product-item-img" :src="item.imgUrl" />
+                    <div class="product-details">
+                        <h3 class="product-details-name">
+                            {{ item.name }}
+                        </h3>
+                        <div class="product-price">
+                            <p class="product-price-now">
+                                <span>&yen;</span>{{ item.price }}
+                            </p>
+                            <span class="product-price-old">
+                                &yen;{{ item.oldPrice }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="product-count">
+                        <span
+                            class="product-count-mius iconfont"
+                            v-if="item.count"
+                            @click="
+                                changeCartItemInfo(shopId, item._id, item, -1)
+                            "
+                        >
+                            &#xe60b;
+                        </span>
+                        <span class="product-count-number">
+                            {{ item.count }}
+                        </span>
+                        <span
+                            class="product-count-plus iconfont"
+                            @click="
+                                changeCartItemInfo(shopId, item._id, item, 1)
+                            "
+                        >
+                            &#xe61e;
+                        </span>
                     </div>
                 </div>
-                <!-- 商品列表-->
-                <template v-for="item in productList" :key="item.id">
-                    <div class="product-item" v-if="item.count">
-                        <div
-                            class="product-item-checked iconfont"
-                            v-html="item.checked ? '&#xe77b;' : '&#xe670;'"
-                            @click="changeCartItemChecked(shopId, item._id)"
-                        ></div>
-                        <img class="product-item-img" :src="item.imgUrl" />
-                        <div class="product-details">
-                            <h3 class="product-details-name">
-                                {{ item.name }}
-                            </h3>
-                            <div class="product-price">
-                                <p class="product-price-now">
-                                    <span>&yen;</span>{{ item.price }}
-                                </p>
-                                <span class="product-price-old">
-                                    &yen;{{ item.oldPrice }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="product-count">
-                            <span
-                                class="product-count-mius iconfont"
-                                v-if="item.count"
-                                @click="
-                                    changeCartItemInfo(
-                                        shopId,
-                                        item._id,
-                                        item,
-                                        -1
-                                    )
-                                "
-                            >
-                                &#xe60b;
-                            </span>
-                            <span class="product-count-number">
-                                {{ item.count }}
-                            </span>
-                            <span
-                                class="product-count-plus iconfont"
-                                @click="
-                                    changeCartItemInfo(
-                                        shopId,
-                                        item._id,
-                                        item,
-                                        1
-                                    )
-                                "
-                            >
-                                &#xe61e;
-                            </span>
-                        </div>
-                    </div>
-                </template>
-            </div>
+            </template>
         </div>
+
         <div class="check">
             <div class="check-cart" @click="showShopCart()">
                 <span class="check-cart-icon iconfont">&#xe605;</span>
-                <div class="check-cart-count" v-if="total">{{ total }}</div>
+                <div class="check-cart-count" v-if="Calculation.count">
+                    {{ Calculation.count }}
+                </div>
             </div>
-            <div class="check-total" v-if="total">
+            <div class="check-total" v-if="Calculation.count || !isShow">
                 总计：
-                <span class="check-total-price"> ￥{{ price }} </span>
+                <span class="check-total-price">
+                    ￥{{ Calculation.price }}
+                </span>
             </div>
-            <div class="check-total" v-else>购物车是空的</div>
-            <div class="check-btn">去结算</div>
+            <div class="check-total" v-if="!Calculation.count && isShow">
+                购物车是空的
+            </div>
+            <div class="check-btn">
+                <router-link :to="{ path: `/orderConfirmation/${shopId} ` }"
+                    >去结算</router-link
+                >
+            </div>
         </div>
     </div>
 </template>
@@ -104,52 +109,29 @@ const useShopCartInfoEffect = (shopId) => {
     const store = useStore()
     const shopCartList = store.state.shopCartList
 
-    //商品总数
-    const total = computed(() => {
-        const productList = shopCartList[shopId]
-        let count = 0
+    //购物车数据统计
+    let Calculation = computed(() => {
+        const productList = shopCartList[shopId]?.productList
+        let count = 0   //商品总数
+        let price = 0   //总价
+        let isCheckedAll = true;   //全选
         if (productList) {
             for (let i in productList) {
                 const product = productList[i]
                 if (product.checked) {
                     count += product.count;
                 }
-            }
-        }
-        return count
-    })
-    //总价
-    const price = computed(() => {
-        const productList = shopCartList[shopId]
-        let price = 0
-        if (productList) {
-            for (let i in productList) {
-                const product = productList[i]
                 if (product.checked) {
                     price += (product.count * product.price);
                 }
-            }
-        }
-        //取一位小数点处理
-        return price.toFixed((1));
-    })
-
-    //是否全选状态
-    const isCheckedAll = computed(() => {
-        const productList = shopCartList[shopId];
-        let isCheckedAll = false;
-        if (productList) {
-            for (let i in productList) {
-                if (productList[i].checked) {
-                    isCheckedAll = true
-                } else {
+                if (!productList[i].checked) {
                     isCheckedAll = false
-                    return isCheckedAll
                 }
             }
         }
-        return isCheckedAll
+        return { count, price: price.toFixed((1)), isCheckedAll }
     })
+
 
     //商品选中
     const changeCartItemChecked = (shopId, productId) => {
@@ -169,11 +151,14 @@ const useShopCartInfoEffect = (shopId) => {
     }
     //商品列表
     const productList = computed(() => {
-        const productList = shopCartList[shopId] || []
+        let productList = shopCartList[shopId]?.productList || []
+        console.log(productList)
         return productList
     })
+
+
     return {
-        total, price, productList, isCheckedAll,
+        productList, Calculation,
         changeCartItemChecked, clearCartProducts, changeCartProductsChecked
     }
 }
@@ -183,17 +168,17 @@ export default {
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
-        const { total, price, productList, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, isCheckedAll } = useShopCartInfoEffect(shopId);
+        const store = useStore()
+        const { productList, Calculation, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
         const { changeCartItemInfo } = useShopCartEffect()
         const isShow = ref(false)
         const showShopCart = () => {
             isShow.value = !isShow.value
         }
-
         return {
-            total, price, productList, shopId, changeCartItemInfo,
+            productList, shopId, changeCartItemInfo, Calculation,
             changeCartItemChecked, clearCartProducts, changeCartProductsChecked,
-            isCheckedAll, showShopCart, isShow
+            showShopCart, isShow
         }
     },
 }
@@ -256,10 +241,12 @@ export default {
     &-btn {
         text-align: center;
         width: 98px;
-        font-size: 14px;
-        line-height: 49px;
-        color: #fff;
         background: #4fb0f9;
+        a {
+            font-size: 14px;
+            line-height: 49px;
+            color: #fff;
+        }
     }
 }
 .product {
