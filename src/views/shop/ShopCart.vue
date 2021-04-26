@@ -90,9 +90,9 @@
                 购物车是空的
             </div>
             <div class="check-btn">
-                <router-link :to="{ path: `/orderConfirmation/${shopId} ` }"
-                    >去结算</router-link
-                >
+                <router-link :to="{ path: `/orderConfirmation/${shopId}` }">
+                    去结算
+                </router-link>
             </div>
         </div>
     </div>
@@ -168,7 +168,6 @@ export default {
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
-        const store = useStore()
         const { productList, Calculation, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
         const { changeCartItemInfo } = useShopCartEffect()
         const isShow = ref(false)

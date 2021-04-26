@@ -143,13 +143,17 @@ export default {
 @import "../../style/viriablles.scss";
 .content {
     display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 154px;
+    bottom: 49px;
     //左侧导航栏
     .sidebar {
         border-radius: 2px;
         border-radius: 2px;
         width: 76px;
-        height: 464px;
-        margin-top: 16px 0 49px 0;
+        margin-top: 16px;
         overflow-y: scroll;
         background: $search-bgColor;
         &-item {
