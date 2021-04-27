@@ -39,7 +39,13 @@ const routes = [
     {
         path: "/SetAddress",
         name: "SetAddress",
-        component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/setAddress/setAddress.vue'),
+        component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/setAddress/SetAddress.vue'),
+
+    },
+    {
+        path: "/MyAddressList",
+        name: "MyAddressList",
+        component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/myAddressList/MyAddressList.vue'),
 
     }
 ]

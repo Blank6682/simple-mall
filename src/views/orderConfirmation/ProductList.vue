@@ -3,24 +3,22 @@
         <div class="inventory">
             <h3 class="inventory-title">{{ shopName }}</h3>
             <div class="inventory-list">
-                <div
-                    class="inventory-item"
-                    v-for="item in productList"
-                    :key="item._id"
-                >
-                    <img class="inventory-item-image" :src="item.imgUrl" />
-                    <h4 class="inventory-item-title">{{ item.name }}</h4>
+                <template v-for="item in productList" :key="item._id">
+                    <div class="inventory-item" v-if="item.count">
+                        <img class="inventory-item-image" :src="item.imgUrl" />
+                        <h4 class="inventory-item-title">{{ item.name }}</h4>
 
-                    <div class="inventory-item-count">
-                        &yen;<span>{{ item.price }}×{{ item.count }}</span>
-                    </div>
+                        <div class="inventory-item-count">
+                            <span class="inventory-item-yen">&yen;</span>
+                            {{ item.price }}×{{ item.count }}
+                        </div>
 
-                    <div class="inventory-item-total">
-                        &yen;<span>{{
-                            (item.price * item.count).toFixed(1)
-                        }}</span>
+                        <div class="inventory-item-total">
+                            <span class="inventory-item-yen"> &yen;</span
+                            >{{ (item.price * item.count).toFixed(1) }}
+                        </div>
                     </div>
-                </div>
+                </template>
             </div>
             <div class="inventory-weight iconfont">
                 共计8件/4kg
@@ -39,7 +37,7 @@ export default {
         const store = useStore()
         const route = useRoute()
         const shopId = route.params.id
-        const { shopName, productList } = store.state.shopCartList[shopId]
+        const { shopName, productList } = store.state.cartList[shopId]
         return { shopName, productList }
     }
 }
@@ -59,10 +57,10 @@ export default {
         color: #333;
     }
     &-item {
-        display: flex;
         position: relative;
+        display: flex;
         margin-bottom: 16px;
-        font-size: 10px;
+        font-size: 14px;
         color: #333;
         &-image {
             width: 46px;
@@ -70,24 +68,21 @@ export default {
             margin-right: 16px;
         }
         &-title {
-            font-size: 14px;
+            font-size: 16px;
         }
         &-count {
             position: absolute;
             left: 62px;
             bottom: 0;
             color: red;
-            span {
-                font-size: 14px;
-            }
         }
         &-total {
             position: absolute;
             bottom: 0;
-            right: 0;
-            span {
-                font-size: 14px;
-            }
+            right: 16px;
+        }
+        &-yen {
+            font-size: 10px;
         }
     }
     &-weight {

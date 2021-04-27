@@ -14,7 +14,7 @@
                     <span>瑶妹（先生） </span>
                     <span>18911024266</span>
                 </div>
-                <router-link :to="{ path: '/SetAddress' }">
+                <router-link :to="{ path: '/MyAddressList' }">
                     <span class="top-receive-icon iconfont"> &#xe665;</span>
                 </router-link>
             </div>
@@ -39,7 +39,7 @@ export default {
     );
 }
 .top {
-    margin: 0 18px;
+    position: relative;
     &-head {
         text-align: center;
         line-height: 68.5px;
@@ -56,7 +56,6 @@ export default {
         right: 18px;
         background: #fff;
         border-radius: 4px;
-        margin: 0 auto;
         padding: 16px;
         color: #333;
         box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.1);

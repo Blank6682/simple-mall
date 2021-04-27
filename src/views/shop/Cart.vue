@@ -102,16 +102,16 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { useShopCartEffect } from './ShopCartEffect'
+import { useCartEffect } from './CartEffect'
 
 //获取购物车信息逻辑
 const useShopCartInfoEffect = (shopId) => {
     const store = useStore()
-    const shopCartList = store.state.shopCartList
+    const cartList = store.state.cartList
 
     //购物车数据统计
     let Calculation = computed(() => {
-        const productList = shopCartList[shopId]?.productList
+        const productList = cartList[shopId]?.productList
         let count = 0   //商品总数
         let price = 0   //总价
         let isCheckedAll = true;   //全选
@@ -151,7 +151,7 @@ const useShopCartInfoEffect = (shopId) => {
     }
     //商品列表
     const productList = computed(() => {
-        let productList = shopCartList[shopId]?.productList || []
+        let productList = cartList[shopId]?.productList || []
         console.log(productList)
         return productList
     })
@@ -169,7 +169,7 @@ export default {
         const route = useRoute()
         const shopId = route.params.id;
         const { productList, Calculation, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
-        const { changeCartItemInfo } = useShopCartEffect()
+        const { changeCartItemInfo } = useCartEffect()
         const isShow = ref(false)
         const showShopCart = () => {
             isShow.value = !isShow.value

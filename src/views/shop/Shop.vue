@@ -14,7 +14,7 @@
             <ShopInfo :item="item" :hideBorder="true" />
         </div>
         <Content :shopName="item.name" />
-        <ShopCart />
+        <Cart />
         <Toast v-if="isShow" :message="toastMessage" />
     </div>
 </template>
@@ -26,7 +26,7 @@ import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo.vue'
 import Toast, { useToastEffect } from '../../components/Toast'
 import Content from './Content'
-import ShopCart from './ShopCart.vue'
+import Cart from './Cart.vue'
 
 //处理获取商店信息逻辑
 const uesShopInfoEffect = (showToast) => {
@@ -54,7 +54,7 @@ const useBackRouterEffect = () => {
     return { handleBackClick }
 }
 export default {
-    components: { ShopInfo, Toast, Content, ShopCart },
+    components: { ShopInfo, Toast, Content, Cart },
     setup () {
         const { isShow, toastMessage, showToast } = useToastEffect();
         const { handleBackClick } = useBackRouterEffect();

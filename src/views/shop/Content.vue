@@ -35,8 +35,7 @@
                     <span
                         class="product-count-mius iconfont"
                         v-if="
-                            shopCartList?.[shopId]?.productList?.[item._id]
-                                ?.count
+                            cartList?.[shopId]?.productList?.[item._id]?.count
                         "
                         @click="
                             changeCartItemInfo(
@@ -53,15 +52,11 @@
                     <!-- 显示的是购物车的商品数量 -->
                     <span
                         v-if="
-                            shopCartList?.[shopId]?.productList?.[item._id]
-                                ?.count
+                            cartList?.[shopId]?.productList?.[item._id]?.count
                         "
                         class="product-count-number"
                     >
-                        {{
-                            shopCartList?.[shopId]?.productList?.[item._id]
-                                ?.count
-                        }}
+                        {{ cartList?.[shopId]?.productList?.[item._id]?.count }}
                     </span>
                     <span
                         class="product-count-plus iconfont"
@@ -87,7 +82,7 @@
 import { reactive, ref, toRefs, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { get } from '../../utils/request'
-import { useShopCartEffect } from './ShopCartEffect'
+import { useCartEffect } from './CartEffect'
 
 //tab列表
 const tabList = [
@@ -130,10 +125,10 @@ export default {
         //逻辑处理
         const { currentTab, handleTabClick } = useTagEffect();
         const { goodsList } = useShopListEffect(currentTab, shopId);
-        const { changeCartItemInfo, shopCartList } = useShopCartEffect()
+        const { changeCartItemInfo, cartList } = useCartEffect()
         return {
             goodsList, tabList, currentTab, handleTabClick,
-            changeCartItemInfo, shopId, shopCartList
+            changeCartItemInfo, shopId, cartList
         }
     }
 }

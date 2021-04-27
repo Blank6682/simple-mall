@@ -2,13 +2,13 @@ import { createStore } from 'vuex'
 
 
 const setLocalStorage = (state) => {
-    const { shopCartList } = state
-    const shopCartListString = JSON.stringify(shopCartList)
-    localStorage.shopCartList = shopCartListString
+    const { cartList } = state
+    const cartListString = JSON.stringify(cartList)
+    localStorage.cartList = cartListString
 }
-const getLocalShopCartList = () => {
+const getLocalcartList = () => {
     try {
-        return JSON.parse(localStorage.shopCartList)
+        return JSON.parse(localStorage.cartList)
     } catch (e) {
         return {}
     }
@@ -16,9 +16,10 @@ const getLocalShopCartList = () => {
 
 export default createStore({
     state: {
-        //购物车数据结构 shopCartList: {shopId :{shopName:"",productList:{}}}
+        //购物车数据结构 cartList: {shopId :{shopName:"",productList:{}}}
         //第一层是商店Id：shopId  第二层是商店名及其内容 {shopName:"",productList:{}}
-        shopCartList: getLocalShopCartList()
+        cartList: getLocalcartList(),
+        addressList: {}
     },
     getters: {
     },
@@ -27,7 +28,7 @@ export default createStore({
         changeCartItemInfo (state, payload) {
             const { shopId, productId, productInfo, num, shopName } = payload
             //商店信息
-            let shopInfo = state.shopCartList[shopId] || { shopName: shopName, productList: {} }//不存在则赋值空对象
+            let shopInfo = state.cartList[shopId] || { shopName: shopName, productList: {} }//不存在则赋值空对象
 
             //商品信息
             let product = shopInfo.productList[productId]
@@ -45,17 +46,16 @@ export default createStore({
                 product.count = 0
             }
 
-            //把信息添加到shopCartList
+            //把信息添加到cartList
             shopInfo.productList[productId] = product
-            state.shopCartList[shopId] = shopInfo
+            state.cartList[shopId] = shopInfo
             setLocalStorage(state)
-
         },
 
         //商品的选择
         changeCartItemChecked (state, payload) {
             const { shopId, productId } = payload
-            let shopInfo = state.shopCartList[shopId]
+            let shopInfo = state.cartList[shopId]
             shopInfo.productList[productId].checked = !shopInfo.productList[productId].checked
             setLocalStorage(state)
         },
@@ -63,18 +63,22 @@ export default createStore({
         //清空购物车
         clearCartProducts (state, payload) {
             const { shopId } = payload
-            state.shopCartList[shopId].productList = {};
+            state.cartList[shopId].productList = {};
             setLocalStorage(state)
         },
 
         //全选
         changeCartProductsChecked (state, payload) {
             const { shopId, isCheckedAll } = payload
-            let shopCartList = state.shopCartList[shopId]?.productList;
-            for (let i in shopCartList) {
-                shopCartList[i].checked = isCheckedAll;
+            let cartList = state.cartList[shopId]?.productList;
+            for (let i in cartList) {
+                cartList[i].checked = isCheckedAll;
             }
             setLocalStorage(state)
+        },
+        //收货地址设置
+        handleSaveAddress (state, addressList) {
+            state.addressList.splice(0, addressList.length, ...addressList)
         }
     },
     actions: {
