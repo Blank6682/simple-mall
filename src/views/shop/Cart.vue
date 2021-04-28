@@ -99,40 +99,14 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { useCartEffect } from './CartEffect'
+import { useCartEffect } from '../../effects/CartEffect'
 
 //获取购物车信息逻辑
-const useShopCartInfoEffect = (shopId) => {
+const useShopCartInfoEffect = () => {
     const store = useStore()
-    const cartList = store.state.cartList
-
-    //购物车数据统计
-    let Calculation = computed(() => {
-        const productList = cartList[shopId]?.productList
-        let count = 0   //商品总数
-        let price = 0   //总价
-        let isCheckedAll = true;   //全选
-        if (productList) {
-            for (let i in productList) {
-                const product = productList[i]
-                if (product.checked) {
-                    count += product.count;
-                }
-                if (product.checked) {
-                    price += (product.count * product.price);
-                }
-                if (!productList[i].checked) {
-                    isCheckedAll = false
-                }
-            }
-        }
-        return { count, price: price.toFixed((1)), isCheckedAll }
-    })
-
-
     //商品选中
     const changeCartItemChecked = (shopId, productId) => {
         //提交changeCartItemChecked事件 可以同步修改store的数据
@@ -149,16 +123,7 @@ const useShopCartInfoEffect = (shopId) => {
     const clearCartProducts = (shopId) => {
         store.commit("clearCartProducts", { shopId })
     }
-    //商品列表
-    const productList = computed(() => {
-        let productList = cartList[shopId]?.productList || []
-        console.log(productList)
-        return productList
-    })
-
-
     return {
-        productList, Calculation,
         changeCartItemChecked, clearCartProducts, changeCartProductsChecked
     }
 }
@@ -168,8 +133,8 @@ export default {
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
-        const { productList, Calculation, changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
-        const { changeCartItemInfo } = useCartEffect()
+        const { changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
+        const { changeCartItemInfo, Calculation, productList } = useCartEffect(shopId)
         const isShow = ref(false)
         const showShopCart = () => {
             isShow.value = !isShow.value

@@ -4,7 +4,10 @@
             <h3 class="inventory-title">{{ shopName }}</h3>
             <div class="inventory-list">
                 <template v-for="item in productList" :key="item._id">
-                    <div class="inventory-item" v-if="item.count">
+                    <div
+                        class="inventory-item"
+                        v-if="item.count && item.checked"
+                    >
                         <img class="inventory-item-image" :src="item.imgUrl" />
                         <h4 class="inventory-item-title">{{ item.name }}</h4>
 
@@ -30,14 +33,13 @@
 
 <script>
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { useCartEffect } from '../../effects/CartEffect'
 export default {
     name: "ProductList",
     setup () {
-        const store = useStore()
         const route = useRoute()
         const shopId = route.params.id
-        const { shopName, productList } = store.state.cartList[shopId]
+        const { shopName, productList } = useCartEffect(shopId)
         return { shopName, productList }
     }
 }
@@ -45,16 +47,20 @@ export default {
 
 <style lang="scss" scoped>
 .inventory {
-    position: absolute;
-    left: 18px;
-    right: 18px;
+    position: relative;
     padding: 16px;
+    margin: 0 18px 65px 18px;
     background-color: #fff;
     box-shadow: 0px 1px 3px 1px rgba($color: #000000, $alpha: 0.1);
+
     &-title {
         margin-bottom: 16px;
         font-size: 16px;
         color: #333;
+    }
+    &-list {
+        // position: absolute;
+        overflow-y: scroll;
     }
     &-item {
         position: relative;

@@ -82,7 +82,7 @@
 import { reactive, ref, toRefs, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { get } from '../../utils/request'
-import { useCartEffect } from './CartEffect'
+import { useCartEffect } from '../../effects/CartEffect'
 
 //tab列表
 const tabList = [

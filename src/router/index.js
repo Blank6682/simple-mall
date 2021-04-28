@@ -37,7 +37,7 @@ const routes = [
 
     },
     {
-        path: "/SetAddress",
+        path: "/SetAddress/:id",
         name: "SetAddress",
         component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/setAddress/SetAddress.vue'),
 
@@ -46,6 +46,12 @@ const routes = [
         path: "/MyAddressList",
         name: "MyAddressList",
         component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/myAddressList/MyAddressList.vue'),
+
+    },
+    {
+        path: "/Order",
+        name: "Order",
+        component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/order/Order.vue'),
 
     }
 ]

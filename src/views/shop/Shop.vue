@@ -15,7 +15,6 @@
         </div>
         <Content :shopName="item.name" />
         <Cart />
-        <Toast v-if="isShow" :message="toastMessage" />
     </div>
 </template>
 
@@ -24,12 +23,11 @@ import { reactive, toRefs, } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo.vue'
-import Toast, { useToastEffect } from '../../components/Toast'
 import Content from './Content'
 import Cart from './Cart.vue'
 
 //处理获取商店信息逻辑
-const uesShopInfoEffect = (showToast) => {
+const uesShopInfoEffect = () => {
     // route可以获取路由中的数据
     const route = useRoute();
     const data = reactive({ item: {} })
@@ -37,8 +35,6 @@ const uesShopInfoEffect = (showToast) => {
         const result = await get(`/api/shop/${route.params.id}`)//通过route获取id
         if (result?.errno === 0 && result.data) {
             data.item = result.data
-        } else {
-            showToast(result.message)
         }
     }
     const { item } = toRefs(data)
@@ -54,14 +50,13 @@ const useBackRouterEffect = () => {
     return { handleBackClick }
 }
 export default {
-    components: { ShopInfo, Toast, Content, Cart },
+    components: { ShopInfo, Content, Cart },
     setup () {
-        const { isShow, toastMessage, showToast } = useToastEffect();
         const { handleBackClick } = useBackRouterEffect();
-        const { item, getShopInfo } = uesShopInfoEffect(showToast);
+        const { item, getShopInfo } = uesShopInfoEffect();
         getShopInfo()
         return {
-            item, toastMessage, isShow,
+            item, isShow,
             handleBackClick
         }
     }

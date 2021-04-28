@@ -2,7 +2,9 @@
     <div class="bg">
         <div class="top">
             <div class="top-head">
-                <span class="top-head-back iconfont">&#xe677;</span>
+                <span class="top-head-back iconfont" @click="$router.back(-1)"
+                    >&#xe677;</span
+                >
                 确认订单
             </div>
             <div class="top-receive">

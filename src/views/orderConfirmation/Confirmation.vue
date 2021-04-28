@@ -2,7 +2,10 @@
     <div class="warper">
         <div class="bottom">
             <div class="bottom-pay">
-                实付金额 <span class="bottom-pay-price">&yen;0.00</span>
+                实付金额
+                <span class="bottom-pay-price"
+                    ><b> &yen;{{ Calculation.price }}</b></span
+                >
             </div>
             <div class="bottom-confirmation">提交订单</div>
         </div>
@@ -30,8 +33,17 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
+import { useCartEffect } from '../../effects/CartEffect'
 export default {
     name: "Confirmation",
+    setup () {
+        const route = useRoute()
+        console.log("🚀 ~ file: Confirmation.vue ~ line 43 ~ setup ~ route.parmas", route.params)
+        const shopId = route.params.id
+        const { Calculation } = useCartEffect(shopId)
+        return { Calculation }
+    }
 }
 </script>
 
@@ -45,6 +57,7 @@ export default {
     justify-content: space-between;
     line-height: 49px;
     font-size: 14px;
+    background: #fff;
     &-pay {
         margin-left: 24px;
         color: #333;

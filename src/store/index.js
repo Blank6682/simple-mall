@@ -19,7 +19,7 @@ export default createStore({
         //购物车数据结构 cartList: {shopId :{shopName:"",productList:{}}}
         //第一层是商店Id：shopId  第二层是商店名及其内容 {shopName:"",productList:{}}
         cartList: getLocalcartList(),
-        addressList: {}
+        addressList: []
     },
     getters: {
     },
@@ -77,8 +77,15 @@ export default createStore({
             setLocalStorage(state)
         },
         //收货地址设置
-        handleSaveAddress (state, addressList) {
-            state.addressList.splice(0, addressList.length, ...addressList)
+        handleSaveAddress (state, payload) {
+            const { addressInfo, addressId } = payload
+            //是否新建
+            if (addressId == -1) {
+                const length = state.addressList.length
+                state.addressList.splice(length, length, addressInfo)
+            } else {
+                state.addressList[addressId] = addressInfo
+            }
         }
     },
     actions: {

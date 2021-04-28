@@ -5,7 +5,9 @@
                 &#xe677;
             </span>
             <h3 class="head-title">编辑收货地址</h3>
-            <span class="head-save" @click="handleSaveAddress(item)">保存</span>
+            <span class="head-save" @click="handleSaveAddress(item, addressId)"
+                >保存</span
+            >
         </div>
         <div class="content">
             <div class="content-item">
@@ -51,22 +53,29 @@
 <script>
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute, useRouter } from 'vue-router'
 export default {
     name: 'SetAddress',
     setup () {
         const store = useStore()
-        const item = reactive({
-            id: "1",
-            city: "北京",
-            community: "理工大学国防科技园",
-            floorNumber: "2号楼10层",
-            uesrName: "幺妹",
-            phone: 1336546466
+        const router = useRouter()
+        const route = useRoute()
+        let item = reactive({
+            city: "",
+            community: "",
+            floorNumber: "",
+            uesrName: "",
+            phone: ""
         })
-        const handleSaveAddress = (addressInfo) => {
-            store.commit("handleSaveAddress", { addressInfo })
+        const addressId = route.params.id
+        if (addressId != -1) {
+            item = store.state.addressList[addressId]
         }
-        return { item, handleSaveAddress }
+        const handleSaveAddress = (addressInfo, addressId) => {
+            store.commit("handleSaveAddress", { addressInfo, addressId })
+            router.back(-1)
+        }
+        return { item, handleSaveAddress, addressId }
     }
 
 }
