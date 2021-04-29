@@ -82,28 +82,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/viriablles.scss";
 // .address {
 // }
 .head {
     display: flex;
     justify-content: space-between;
-    padding: 11px 18px;
+    padding: 11 18rem;
     &-title {
-        font-size: 16px;
-        color: #333;
+        font-size: 16rem;
+        color: $content-fontColor;
     }
 }
 .content {
-    margin: 0 18px;
-    font-size: 14px;
+    margin: 0 18rem;
+    font-size: 14rem;
     &-item {
         display: flex;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba($color: #000000, $alpha: 0.2);
+        padding: 12rem 0;
+        border-bottom: 1rem solid rgba($color: #000000, $alpha: 0.2);
         input {
             flex: 1;
             width: 100%;
-            border-radius: 4px;
+            border-radius: 4rem;
             border: none;
             outline: none;
         }

@@ -35,30 +35,30 @@ export default {
 @import "../style/viriablles.scss";
 .shop {
     display: flex;
-    color: $content-fontcolor;
-    margin-top: 12px;
+    color: $content-fontColor;
+    margin-top: 12rem;
     &-img {
-        margin-right: 16px;
-        width: 56px;
-        height: 56px;
+        margin-right: 16rem;
+        width: 56rem;
+        height: 56rem;
     }
     &-content {
         width: 100%;
         &-hide-border {
-            border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+            border-bottom: 1rem solid rgba($color: #000000, $alpha: 0.1);
         }
         &-title {
-            font-size: 16px;
-            margin: 0 0 8px 0;
+            font-size: 16rem;
+            margin: 0 0 8rem 0;
         }
         &-desc {
-            font-size: 13px;
-            margin: 0 16px 8px 0;
+            font-size: 13rem;
+            margin: 0 16rem 8rem 0;
         }
         &-pref {
-            font-size: 13px;
-            color: #e93b3b;
-            margin-bottom: 12px;
+            font-size: 13rem;
+            color: $hightlight-fontColor;
+            margin-bottom: 12rem;
         }
     }
 }

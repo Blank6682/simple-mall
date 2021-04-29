@@ -53,13 +53,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/viriablles.scss";
 .head {
     display: flex;
     justify-content: space-between;
-    padding: 11px 18px;
+    padding: 11rem 18rem;
     &-title {
-        font-size: 16px;
-        color: #333;
+        font-size: 16rem;
+        color: $content-fontColor;
     }
     &-create {
         color: #000;
@@ -67,46 +68,46 @@ export default {
 }
 .address {
     &-title {
-        font-size: 14px;
-        margin: 16px 0 12px 18px;
+        font-size: 14rem;
+        margin: 16rem 0 12rem 18rem;
     }
     &-list {
         position: absolute;
-        left: 18px;
-        right: 18px;
+        left: 18rem;
+        right: 18rem;
         &-item {
             position: relative;
-            padding: 16px;
-            margin-bottom: 16px;
-            border-radius: 4px;
-            color: #333;
-            background: #fff;
-            box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.1);
+            padding: 16rem;
+            margin-bottom: 16rem;
+            border-radius: 4rem;
+            color: $content-fontColor;
+            background: $bgColor;
+            box-shadow: 0rem 2rem 4rem rgba($color: #000000, $alpha: 0.1);
         }
     }
 
     &-contact {
         display: flex;
-        width: 260px;
-        font-size: 14px;
-        color: #999;
+        width: 260rem;
+        font-size: 14rem;
+        color: $light-fontColor;
         &-phone {
             flex: 1;
             text-align: center;
         }
     }
     &-details {
-        margin-top: 6px;
-        max-width: 260px;
-        font-size: 14px;
-        line-height: 20px;
+        margin-top: 6rem;
+        max-width: 260rem;
+        font-size: 14rem;
+        line-height: 20rem;
     }
     &-icon {
         position: absolute;
         top: 50%;
-        right: 18px;
+        right: 18rem;
         transform: translateY(-50%);
-        font-size: 18px;
+        font-size: 18rem;
     }
 }
 </style>

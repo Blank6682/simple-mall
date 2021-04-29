@@ -42,7 +42,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
 .banner {
-    margin-top: 12px;
+    margin-top: 12rem;
     &-img {
         width: 100%;
         border-bottom: 25%;
@@ -54,26 +54,26 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: 16px;
-    color: $content-fontcolor;
+    margin-top: 16rem;
+    color: $content-fontColor;
     &-item {
         width: 20%;
         &-icon {
             display: block;
-            width: 40px;
-            height: 40px;
+            width: 40rem;
+            height: 40rem;
             margin: 0 auto;
         }
         &-title {
             text-align: center;
-            margin: 6px 0 16px 0;
-            font-size: 12px;
+            margin: 6rem 0 16rem 0;
+            font-size: 12rem;
         }
     }
 }
 .border-line {
-    margin: 0 -18px;
-    height: 10px;
-    background: #f1f1f1;
+    margin: 0 -18rem;
+    height: 10rem;
+    background: $content-bgColor;
 }
 </style>

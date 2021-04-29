@@ -46,17 +46,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/viriablles.scss";
 .inventory {
     position: relative;
-    padding: 16px;
-    margin: 0 18px 65px 18px;
-    background-color: #fff;
-    box-shadow: 0px 1px 3px 1px rgba($color: #000000, $alpha: 0.1);
+    padding: 16rem;
+    margin: 0 18rem 65rem 18rem;
+    background-color: $bgColor;
+    box-shadow: 0rem 1rem 3rem 1rem rgba($color: #000000, $alpha: 0.1);
 
     &-title {
-        margin-bottom: 16px;
-        font-size: 16px;
-        color: #333;
+        margin-bottom: 16rem;
+        font-size: 16rem;
+        color: $content-fontColor;
     }
     &-list {
         // position: absolute;
@@ -65,42 +66,42 @@ export default {
     &-item {
         position: relative;
         display: flex;
-        margin-bottom: 16px;
-        font-size: 14px;
-        color: #333;
+        margin-bottom: 16rem;
+        font-size: 14rem;
+        color: $content-fontColor;
         &-image {
-            width: 46px;
-            height: 46px;
-            margin-right: 16px;
+            width: 46rem;
+            height: 46rem;
+            margin-right: 16rem;
         }
         &-title {
-            font-size: 16px;
+            font-size: 16rem;
         }
         &-count {
             position: absolute;
-            left: 62px;
+            left: 62rem;
             bottom: 0;
-            color: red;
+            color: $hightlight-fontColor;
         }
         &-total {
             position: absolute;
             bottom: 0;
-            right: 16px;
+            right: 16rem;
         }
         &-yen {
-            font-size: 10px;
+            font-size: 10rem;
         }
     }
     &-weight {
-        height: 28px;
-        font-size: 14px;
+        height: 28rem;
+        font-size: 14rem;
         font-weight: 200;
         text-align: center;
-        line-height: 28px;
+        line-height: 28rem;
         color: #999;
-        background-color: #f5f5f5;
+        background-color: $search-bgColor;
         &-icon {
-            margin-left: 8px;
+            margin-left: 8rem;
         }
     }
 }

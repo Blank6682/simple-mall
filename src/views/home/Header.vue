@@ -23,46 +23,46 @@ export default {
 @import "../../style/viriablles.scss";
 @import "../../style/mixins.scss";
 .herder {
-    color: $content-fontcolor;
+    color: $content-fontColor;
     .address {
         display: flex;
         justify-content: space-between;
         align-items: center;
         position: relative;
-        font-size: 16px;
-        line-height: 22px;
+        font-size: 16rem;
+        line-height: 22rem;
         @include ellipsis;
         &-icon {
             position: relative;
-            top: 1px;
-            margin-right: 8.5px;
+            top: 1rem;
+            margin-right: 8.5rem;
         }
     }
     .iconfont {
-        color: #000000;
-        font-size: 20px;
+        color: $darkColor;
+        font-size: 20rem;
     }
 }
 .searchbar {
     display: flex;
-    margin-top: 16px;
-    border-radius: 16px;
-    height: 32px;
+    margin-top: 16rem;
+    border-radius: 16rem;
+    height: 32rem;
     background: rgba($color: #272727, $alpha: 0.1);
     color: #b7b7b7;
     overflow: hidden;
     input {
         width: 100%;
         height: 100%;
-        font-size: 14px;
-        line-height: 16px;
-        border: 0px;
+        font-size: 14rem;
+        line-height: 16rem;
+        border: 0rem;
         outline: none;
         background: rgba($color: #272727, $alpha: 0.05);
     }
     &-icon {
-        line-height: 32px;
-        margin: 0px 7px;
+        line-height: 32rem;
+        margin: 0rem 7rem;
     }
 }
 </style>

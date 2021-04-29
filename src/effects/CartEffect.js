@@ -11,7 +11,7 @@ export const useCartEffect = (shopId) => {
     }
 
     //购物车数据统计
-    const Calculation = computed(() => {
+    const calculations = computed(() => {
         const productList = cartList[shopId]?.productList
         let count = 0   //商品总数
         let price = 0   //总价
@@ -44,5 +44,5 @@ export const useCartEffect = (shopId) => {
         let shopName = cartList[shopId]?.shopName || ''
         return shopName
     })
-    return { changeCartItemInfo, cartList, Calculation, productList, shopName }
+    return { changeCartItemInfo, cartList, calculations, productList, shopName }
 }

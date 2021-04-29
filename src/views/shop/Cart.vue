@@ -7,12 +7,12 @@
                     <span
                         class="product-header-icon iconfont"
                         v-html="
-                            Calculation.isCheckedAll ? '&#xe77b;' : '&#xe670;'
+                            calculations.isCheckedAll ? '&#xe77b;' : '&#xe670;'
                         "
                         @click="
                             changeCartProductsChecked(
                                 shopId,
-                                Calculation.isCheckedAll
+                                calculations.isCheckedAll
                             )
                         "
                     ></span>
@@ -76,17 +76,17 @@
         <div class="check">
             <div class="check-cart" @click="showShopCart()">
                 <span class="check-cart-icon iconfont">&#xe605;</span>
-                <div class="check-cart-count" v-if="Calculation.count">
-                    {{ Calculation.count }}
+                <div class="check-cart-count" v-if="calculations.count">
+                    {{ calculations.count }}
                 </div>
             </div>
-            <div class="check-total" v-if="Calculation.count || !isShow">
+            <div class="check-total" v-if="calculations.count || !isShow">
                 总计：
                 <span class="check-total-price">
-                    ￥{{ Calculation.price }}
+                    ￥{{ calculations.price }}
                 </span>
             </div>
-            <div class="check-total" v-if="!Calculation.count && isShow">
+            <div class="check-total" v-if="!calculations.count && isShow">
                 购物车是空的
             </div>
             <div class="check-btn">
@@ -134,13 +134,13 @@ export default {
         const route = useRoute()
         const shopId = route.params.id;
         const { changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
-        const { changeCartItemInfo, Calculation, productList } = useCartEffect(shopId)
+        const { changeCartItemInfo, calculations, productList } = useCartEffect(shopId)
         const isShow = ref(false)
         const showShopCart = () => {
             isShow.value = !isShow.value
         }
         return {
-            productList, shopId, changeCartItemInfo, Calculation,
+            productList, shopId, changeCartItemInfo, calculations,
             changeCartItemChecked, clearCartProducts, changeCartProductsChecked,
             showShopCart, isShow
         }
@@ -165,51 +165,51 @@ export default {
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 49px;
-    line-height: 49px;
-    background: #fff;
-    box-shadow: 0 -1px 1px 0 #f1f1f1;
+    height: 49rem;
+    line-height: 49rem;
+    background: $bgColor;
+    box-shadow: 0 -1rem 1rem 0 $content-bgColor;
     &-cart {
         position: relative;
-        margin: 0 24px;
+        margin: 0 24rem;
         &-icon {
-            color: #0091ff;
-            font-size: 20px;
+            color: $btn-bgColor;
+            font-size: 20rem;
         }
         &-count {
             position: absolute;
-            top: 2px;
-            right: -10px;
-            font-size: 8px;
-            line-height: 8px;
-            min-width: 10px;
-            height: 10px;
+            top: 2rem;
+            right: -10rem;
+            font-size: 8rem;
+            line-height: 8rem;
+            min-width: 10rem;
+            height: 10rem;
             text-align: center;
-            border-radius: 8px;
-            color: #fff;
-            background: #e93b3b;
+            border-radius: 8rem;
+            color: $bgColor;
+            background: $hightlight-fontColor;
             transform-origin: left;
         }
     }
     &-total {
         flex: 1;
-        margin-left: 16px;
-        font-size: 12px;
-        color: $content-fontcolor;
+        margin-left: 16rem;
+        font-size: 12rem;
+        color: $content-fontColor;
         &-price {
             font-weight: 550;
-            font-size: 18px;
-            color: #e93b3b;
+            font-size: 18rem;
+            color: $hightlight-fontColor;
         }
     }
     &-btn {
         text-align: center;
-        width: 98px;
-        background: #4fb0f9;
+        width: 98rem;
+        background: $btn-bgColor;
         a {
-            font-size: 14px;
-            line-height: 49px;
-            color: #fff;
+            font-size: 14rem;
+            line-height: 49rem;
+            color: $bgColor;
         }
     }
 }
@@ -219,98 +219,98 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    margin-bottom: 49px;
+    margin-bottom: 49rem;
     width: 100%;
-    background: #fff;
+    background: $bgColor;
     &-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 18px;
-        margin-bottom: 16px;
-        font-size: 14px;
-        line-height: 20px;
-        color: $content-fontcolor;
-        border-bottom: 1px solid #f1f1f1;
+        padding: 16rem 18rem;
+        margin-bottom: 16rem;
+        font-size: 14rem;
+        line-height: 20rem;
+        color: $content-fontColor;
+        border-bottom: 1rem solid $content-bgColor;
         vertical-align: top;
         &-icon {
-            font-size: 20px;
-            color: #0091ff;
-            margin-right: 8px;
+            font-size: 20rem;
+            color: $btn-bgColor;
+            margin-right: 8rem;
         }
     }
     &-item {
         position: relative;
         display: flex;
         align-items: center;
-        margin: 0 18px 16px;
+        margin: 0 18rem 16rem;
         &-checked {
-            font-size: 20px;
-            color: #0091ff;
+            font-size: 20rem;
+            color: $btn-bgColor;
         }
         &-img {
-            width: 46px;
-            height: 46px;
-            margin: 0 16px;
+            width: 46rem;
+            height: 46rem;
+            margin: 0 16rem;
         }
     }
     &-details {
-        color: $content-fontcolor;
+        color: $content-fontColor;
         &-name {
             font-weight: 550;
-            font-size: 14px;
+            font-size: 14rem;
             margin: 0;
         }
     }
     &-price {
-        margin-top: 6px;
+        margin-top: 6rem;
         &-now {
             display: inline-block;
-            color: #e93b3b;
+            color: $hightlight-fontColor;
             font-weight: bold;
-            font-size: 14px;
-            line-height: 14px;
+            font-size: 14rem;
+            line-height: 14rem;
             span {
-                font-size: 10px;
+                font-size: 10rem;
             }
         }
         &-old {
             display: inline-block;
             text-decoration: line-through;
-            color: #999999;
-            font-size: 10px;
-            line-height: 20px;
+            color: $light-fontColor;
+            font-size: 10rem;
+            line-height: 20rem;
         }
     }
     &-count {
         position: absolute;
         bottom: 0;
         right: 0;
-        margin-bottom: 18px;
+        margin-bottom: 18rem;
         &-mius,
         &-plus {
             display: inline-block;
-            font-size: 14px;
+            font-size: 14rem;
             text-align: center;
             border-radius: 50%;
         }
         &-mius {
             box-sizing: border-box;
-            width: 18px;
-            height: 18px;
-            color: #666666;
-            border: 1px solid #666666;
+            width: 18rem;
+            height: 18rem;
+            color: $medium-fontColor;
+            border: 1rem solid $medium-fontColor;
         }
         &-plus {
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            background-color: #0091ff;
-            color: #fff;
+            width: 20rem;
+            height: 20rem;
+            line-height: 20rem;
+            background-color: $btn-bgColor;
+            color: $bgColor;
         }
         &-number {
-            margin: 0 10px;
-            color: $content-fontcolor;
+            margin: 0 10rem;
+            color: $content-fontColor;
         }
     }
 }

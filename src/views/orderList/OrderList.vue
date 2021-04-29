@@ -6,25 +6,47 @@
                 <div class="order-list-item"></div>
             </div>
         </div>
+        <footer-tap-bar></footer-tap-bar>
     </div>
 </template>
 
 <script>
-export default {
-    name: 'Order'
+import { get } from '../../utils/request'
+import FooterTapBar from '../../components/FooterTapBar.vue'
+import { reactive } from 'vue'
 
+const useOrderListEffrct = () => {
+    const data = reactive({ list: [] })
+    const getNearShopList = async () => {
+        const result = await get('/api/order')
+
+    }
+    return { getNearShopList }
+}
+export default {
+    name: 'OrderList',
+    components: { FooterTapBar },
+    setup (props) {
+        const { getNearShopList } = useOrderListEffrct();
+        getNearShopList();
+        return;
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
+.warper {
+    padding: 0;
+    margin: 0;
+}
 .order {
     &-title {
         text-align: center;
         font-size: 16px;
         line-height: 22px;
-        margin: 11px auto;
-        color: $content-fontcolor;
+        padding: 11px 0;
+        color: $content-fontColor;
         box-shadow: 0px 1px 0px 0px rgba($color: #000000, $alpha: 0.2);
     }
     &-list {

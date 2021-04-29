@@ -56,7 +56,7 @@ export default {
         const { item, getShopInfo } = uesShopInfoEffect();
         getShopInfo()
         return {
-            item, isShow,
+            item,
             handleBackClick
         }
     }

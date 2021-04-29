@@ -34,9 +34,9 @@ export const useToastEffect = () => {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 8px 10px;
-    color: $content-notice-fontcolor;
+    color: $content-notice-fontColor;
     border-radius: 4px;
     background-color: #ccc;
-    box-shadow: 1px 1px 4px 1px $content-notice-fontcolor;
+    box-shadow: 1px 1px 4px 1px $content-notice-fontColor;
 }
 </style>

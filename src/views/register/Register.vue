@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/viriablles.scss";
 .register {
     position: absolute;
     width: 100vw;
@@ -48,44 +49,44 @@ export default {
     transform: translateY(-50%);
     &-icon {
         display: block;
-        width: 66px;
-        height: 66px;
-        margin: 0 auto 24px auto;
+        width: 66rem;
+        height: 66rem;
+        margin: 0 auto 24rem auto;
     }
     &-link {
-        font-size: 14px;
-        width: 98px;
-        padding-right: 12px;
+        font-size: 14rem;
+        width: 98rem;
+        padding-right: 12rem;
         margin: 0 auto;
         color: rgba($color: #000000, $alpha: 0.5);
     }
     input {
         display: block;
-        width: 279px;
-        margin: 16px auto;
-        padding-left: 16px;
-        font-size: 16px;
-        line-height: 48px;
+        width: 279rem;
+        margin: 16rem auto;
+        padding-left: 16rem;
+        font-size: 16rem;
+        line-height: 48rem;
         color: rgba($color: #000000, $alpha: 0.5);
         background-color: #f9f9f9;
-        border-radius: 6px;
-        border: 1px solid rgba($color: #000000, $alpha: 0.1);
-        outline-color: #0091ff;
+        border-radius: 6rem;
+        border: 1rem solid rgba($color: #000000, $alpha: 0.1);
+        outline-color: $btn-bgColor;
     }
     &-btn {
         display: block;
-        width: 295px;
-        margin: 32px auto 16px auto;
-        font-size: 16px;
-        line-height: 48px;
+        width: 295rem;
+        margin: 32rem auto 16rem auto;
+        font-size: 16rem;
+        line-height: 48rem;
         text-align: center;
-        color: #fff;
-        background: #0091ff;
-        box-shadow: 0 4px 8px 0 rgba(0, 145, 255, 0.32);
+        color: $bgColor;
+        background: $btn-bgColor;
+        box-shadow: 0 4rem 8rem 0 rgba(0, 145, 255, 0.32);
         border: none;
-        border-radius: 4px;
-        border-radius: 4px;
-        outline-color: #0091ff;
+        border-radius: 4rem;
+        border-radius: 4rem;
+        outline-color: $btn-bgColor;
     }
 }
 </style>

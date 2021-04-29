@@ -153,7 +153,7 @@ export default {
         background: $search-bgColor;
         &-item {
             font-size: 14px;
-            color: $content-fontcolor;
+            color: $content-fontColor;
             text-align: center;
             line-height: 50px;
             &-active {
@@ -180,7 +180,7 @@ export default {
             }
         }
         &-details {
-            color: $content-fontcolor;
+            color: $content-fontColor;
             &-name {
                 font-weight: 550;
                 font-size: 14px;
@@ -236,7 +236,7 @@ export default {
             }
             &-number {
                 margin: 0 10px;
-                color: $content-fontcolor;
+                color: $content-fontColor;
             }
         }
     }

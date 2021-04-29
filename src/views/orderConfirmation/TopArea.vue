@@ -31,54 +31,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/viriablles.scss";
 .bg {
-    margin-bottom: 53px;
-    height: 156.5px;
+    margin-bottom: 53rem;
+    height: 156.5rem;
     background-image: linear-gradient(
         0deg,
         rgba(0, 145, 255, 0) 4%,
-        #0091ff 50%
+        $btn-bgColor 50%
     );
 }
 .top {
     position: relative;
     &-head {
         text-align: center;
-        line-height: 68.5px;
-        color: #ffffff;
+        line-height: 68.5rem;
+        color: $bgColor;
         &-back {
             position: absolute;
-            left: 18px;
-            font-size: 22px;
+            left: 18rem;
+            font-size: 22rem;
         }
     }
     &-receive {
         position: absolute;
-        left: 18px;
-        right: 18px;
-        background: #fff;
-        border-radius: 4px;
-        padding: 16px;
-        color: #333;
-        box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.1);
+        left: 18rem;
+        right: 18rem;
+        background: $bgColor;
+        border-radius: 4rem;
+        padding: 16rem;
+        color: $content-fontColor;
+        box-shadow: 0 2rem 4rem rgba($color: #000000, $alpha: 0.1);
         &-title {
-            font-size: 16px;
-            margin-bottom: 14px;
+            font-size: 16rem;
+            margin-bottom: 14rem;
         }
         &-address {
-            font-size: 14px;
-            margin-bottom: 6px;
+            font-size: 14rem;
+            margin-bottom: 6rem;
         }
         &-contact {
-            font-size: 12px;
+            font-size: 12rem;
             color: #666;
         }
         &-icon {
             position: absolute;
             top: 50%;
-            right: 18px;
+            right: 18rem;
             transform: translateY(-50%);
-            font-size: 18px;
+            font-size: 18rem;
         }
     }
 }
