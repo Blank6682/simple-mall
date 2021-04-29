@@ -3,7 +3,7 @@
         <Header />
         <Banner />
         <NearShop />
-        <FooterTapBar></FooterTapBar>
+        <FooterTapBar :currentIndex="0"></FooterTapBar>
     </div>
 </template>
 

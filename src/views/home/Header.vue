@@ -23,6 +23,7 @@ export default {
 @import "../../style/viriablles.scss";
 @import "../../style/mixins.scss";
 .herder {
+    padding-top: 12rem;
     color: $content-fontColor;
     .address {
         display: flex;

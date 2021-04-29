@@ -14,11 +14,11 @@
         <!-- 弹窗 -->
         <div class="popups" v-if="showConfirm">
             <!-- 支付成功提醒 -->
-            <div class="popups-msg" v-if="0">
+            <!-- <div class="popups-msg" v-if="showMessage">
                 <p class="popups-msg-close iconfont">&#xe602;</p>
                 <p class="popups-msg-yes iconfont">&#xe620;</p>
                 <p class="popups-msg-msagess">支付成功，等待配送</p>
-            </div>
+            </div> -->
             <!-- 二次确认订单弹窗 -->
             <div class="popups-pay" v-if="showConfirm">
                 <h3 class="popups-pay-title">确认要离开收银台？</h3>

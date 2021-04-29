@@ -46,6 +46,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/mixins.scss";
 @import "../../style/viriablles.scss";
 .inventory {
     position: relative;
@@ -60,7 +61,6 @@ export default {
         color: $content-fontColor;
     }
     &-list {
-        // position: absolute;
         overflow-y: scroll;
     }
     &-item {
@@ -76,6 +76,7 @@ export default {
         }
         &-title {
             font-size: 16rem;
+            @include ellipsis;
         }
         &-count {
             position: absolute;

@@ -1,6 +1,13 @@
 <template>
     <div class="docker">
-        <div v-for="item in dockerList" :key="item.icon" class="docker-item">
+        <div
+            v-for="(item, index) in dockerList"
+            :key="item.icon"
+            :class="{
+                'docker-item': true,
+                'docker-item-active': index === currentIndex,
+            }"
+        >
             <router-link :to="item.to">
                 <div class="docker-item-icon iconfont" v-html="item.icon"></div>
                 <div class="docker-item-title">{{ item.title }}</div>
@@ -14,6 +21,7 @@ import { reactive } from 'vue'
 import "../style/iconfont.css"
 export default {
     name: "Docker",
+    props: ["currentIndex"],
     setup () {
         const dockerList = reactive([
             { title: "首页", icon: "&#xe752;", to: { name: "Home" } },
@@ -52,9 +60,11 @@ export default {
         a {
             color: $content-fontColor;
         }
-    }
-    &-item:hover {
-        color: #1fa4fc;
+        &-active {
+            a {
+                color: #1fa4fc;
+            }
+        }
     }
 }
 </style>
