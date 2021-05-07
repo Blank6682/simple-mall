@@ -1,25 +1,38 @@
 import { createStore } from 'vuex'
 
 
-const setLocalStorage = (state) => {
+const setLocalStorageCartList = (state) => {
     const { cartList } = state
     const cartListString = JSON.stringify(cartList)
     localStorage.cartList = cartListString
 }
-const getLocalcartList = () => {
+const getLocalCartList = () => {
     try {
         return JSON.parse(localStorage.cartList)
     } catch (e) {
         return {}
     }
 }
+const setLocalStorageAddressList = (state) => {
+    const { addressList } = state
+    const addressListString = JSON.stringify(addressList)
+    localStorage.addressList = addressListString
+}
+const getLocalAddressList = () => {
+    try {
+        return JSON.parse(localStorage.addressList)
+    } catch (e) {
+        return []
+    }
+}
+
 
 export default createStore({
     state: {
         //购物车数据结构 cartList: {shopId :{shopName:"",productList:{}}}
         //第一层是商店Id：shopId  第二层是商店名及其内容 {shopName:"",productList:{}}
-        cartList: getLocalcartList(),
-        addressList: []
+        cartList: getLocalCartList(),
+        addressList: getLocalAddressList()
     },
     getters: {
     },
@@ -49,7 +62,7 @@ export default createStore({
             //把信息添加到cartList
             shopInfo.productList[productId] = product
             state.cartList[shopId] = shopInfo
-            setLocalStorage(state)
+            setLocalStorageCartList(state)
         },
 
         //商品的选择
@@ -57,14 +70,14 @@ export default createStore({
             const { shopId, productId } = payload
             let shopInfo = state.cartList[shopId]
             shopInfo.productList[productId].checked = !shopInfo.productList[productId].checked
-            setLocalStorage(state)
+            setLocalStorageCartList(state)
         },
 
         //清空购物车
         clearCartProducts (state, payload) {
             const { shopId } = payload
             state.cartList[shopId].productList = {};
-            setLocalStorage(state)
+            setLocalStorageCartList(state)
         },
 
         //全选
@@ -74,7 +87,7 @@ export default createStore({
             for (let i in cartList) {
                 cartList[i].checked = isCheckedAll;
             }
-            setLocalStorage(state)
+            setLocalStorageCartList(state)
         },
         //收货地址设置
         handleSaveAddress (state, payload) {
@@ -83,8 +96,10 @@ export default createStore({
             if (addressId == -1) {
                 const length = state.addressList.length
                 state.addressList.splice(length, length, addressInfo)
+                setLocalStorageAddressList(state)
             } else {
                 state.addressList[addressId] = addressInfo
+                setLocalStorageAddressList(state)
             }
         }
     },

@@ -10,7 +10,7 @@
                 >
                     <div class="order-title">
                         {{ item.shopName }}
-                        <span class="order-item-status">
+                        <span class="order-title-status">
                             {{ isCanceled ? "已取消" : "已下单" }}
                         </span>
                     </div>
@@ -27,10 +27,10 @@
                         </template>
                         <div class="order-content-info">
                             <div class="order-content-price">
-                                {{ item.totalPrice }}
+                                &yen;{{ item.totalPrice.toFixed(1) }}
                             </div>
                             <div class="order-content-count">
-                                {{ item.totalNumber }}
+                                共{{ item.totalNumber }}件
                             </div>
                         </div>
                     </div>
@@ -91,18 +91,58 @@ export default {
 .order {
     .title {
         text-align: center;
-        font-size: 16px;
-        line-height: 22px;
-        padding: 11px 0;
+        font-size: 16rem;
+        line-height: 22rem;
+        padding: 11rem 0;
         color: $content-fontColor;
-        box-shadow: 0px 1px 0px 0px rgba($color: #000000, $alpha: 0.2);
+        background-color: $bgColor;
     }
-    // &-list {
-    //     width: 339px;
-    //     height: 110px;
-    //     margin: 16px 18px;
-    //     padding: 16px;
-    //     box-shadow: 0px 1px 1px 1px rgba($color: #000000, $alpha: 0.2);
-    // }
+    &-list {
+        position: absolute;
+        top: 60rem;
+        left: 0;
+        right: 0;
+        bottom: 49rem;
+        &-item {
+            box-shadow: 0 1rem 1rem 1rem rgba($color: #000000, $alpha: 0.2);
+            margin: 16rem 18rem;
+            padding: 16rem;
+        }
+    }
+    &-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16rem;
+        color: $content-fontColor;
+        &-status {
+            font-size: 14rem;
+            color: $light-fontColor;
+        }
+    }
+    &-content {
+        position: relative;
+        display: flex;
+        margin-top: 16rem;
+        &-img {
+            margin-right: 12rem;
+            width: 40rem;
+            height: 40rem;
+        }
+        &-info {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            text-align: right;
+        }
+        &-price {
+            margin-bottom: 4rem;
+            font-size: 14rem;
+            color: $hightlight-fontColor;
+        }
+        &-count {
+            font-size: 12rem;
+            color: $content-fontColor;
+        }
+    }
 }
 </style>

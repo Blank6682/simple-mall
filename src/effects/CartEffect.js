@@ -16,6 +16,7 @@ export const useCartEffect = (shopId) => {
         let count = 0   //商品总数
         let price = 0   //总价
         let isCheckedAll = true;   //全选
+        let cartStatus = true;      //购物车空状态
         if (productList) {
             for (let i in productList) {
                 const product = productList[i]
@@ -28,9 +29,12 @@ export const useCartEffect = (shopId) => {
                 if (!productList[i].checked) {
                     isCheckedAll = false
                 }
+                if (product.count) {
+                    cartStatus = false
+                }
             }
         }
-        return { count, price: price.toFixed((1)), isCheckedAll }
+        return { count, price: price.toFixed((1)), isCheckedAll, cartStatus }
     })
 
     //商品列表
@@ -44,5 +48,6 @@ export const useCartEffect = (shopId) => {
         let shopName = cartList[shopId]?.shopName || ''
         return shopName
     })
+
     return { changeCartItemInfo, cartList, calculations, productList, shopName }
 }

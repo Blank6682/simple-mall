@@ -39,7 +39,7 @@ const routes = [
     {
         path: "/SetAddress/:id",
         name: "SetAddress",
-        component: () => import(/* webpackChunkName: "SetAddress" */'../views/setAddress/setAddress.vue'),
+        component: () => import(/* webpackChunkName: "SetAddress" */'../views/setAddress/SetAddress.vue'),
 
     },
     {
@@ -52,6 +52,11 @@ const routes = [
         path: "/OrderList",
         name: "OrderList",
         component: () => import(/* webpackChunkName: "OrderList" */'../views/orderList/OrderList.vue'),
+    },
+    {
+        path: "/PersonalInfo",
+        name: "PersonalInfo",
+        component: () => import(/* webpackChunkName: "PersonalInfo" */'../views/personalInfo/Index.vue'),
     }
 ]
 

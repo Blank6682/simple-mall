@@ -4,7 +4,9 @@
             <span class="head-back iconfont" @click="$router.back(-1)">
                 &#xe677;
             </span>
-            <h3 class="head-title">编辑收货地址</h3>
+            <h3 class="head-title">
+                {{ $route.params.id == -1 ? "新建" : "编辑" }}收货地址
+            </h3>
             <span class="head-save" @click="handleSaveAddress(item, addressId)"
                 >保存</span
             >
@@ -88,7 +90,7 @@ export default {
 .head {
     display: flex;
     justify-content: space-between;
-    padding: 11 18rem;
+    padding: 11rem 18rem;
     &-title {
         font-size: 16rem;
         color: $content-fontColor;

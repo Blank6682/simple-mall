@@ -27,7 +27,7 @@ export default {
             { title: "首页", icon: "&#xe752;", to: { name: "Home" } },
             { title: "购物车", icon: "&#xe64e;", to: {} },
             { title: "订单", icon: "&#xe600;", to: { name: "OrderList" } },
-            { title: "我的", icon: "&#xe63c;", to: {} },
+            { title: "我的", icon: "&#xe63c;", to: { name: "PersonalInfo" } },
         ])
         return { dockerList }
     },
@@ -61,6 +61,7 @@ export default {
             color: $content-fontColor;
         }
         &-active {
+            transform: scale(1.1);
             a {
                 color: #1fa4fc;
             }

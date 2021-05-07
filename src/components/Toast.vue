@@ -9,20 +9,21 @@ export default {
     name: "Toast",
     props: { message: String },
 }
+
 export const useToastEffect = () => {
     const toastData = reactive({
         toastMessage: '',
-        isShow: false
+        isShowToast: false
     })
     const showToast = (msg) => {
-        toastData.isShow = true
+        toastData.isShowToast = true
         toastData.toastMessage = msg
         setTimeout(() => {
-            toastData.isShow = false
+            toastData.isShowToast = false
         }, 1500)
     }
-    const { toastMessage, isShow } = toRefs(toastData)
-    return { showToast, toastMessage, isShow }
+    const { toastMessage, isShowToast } = toRefs(toastData)
+    return { showToast, toastMessage, isShowToast }
 }
 </script>
 
@@ -33,10 +34,10 @@ export const useToastEffect = () => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 8px 10px;
+    padding: 8rem 10rem;
     color: $content-notice-fontColor;
-    border-radius: 4px;
-    background-color: #ccc;
-    box-shadow: 1px 1px 4px 1px $content-notice-fontColor;
+    border-radius: 8rem;
+    background-color: $bgColor;
+    box-shadow: 1rem 1rem 4rem 1rem $content-notice-fontColor;
 }
 </style>

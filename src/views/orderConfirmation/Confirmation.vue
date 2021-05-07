@@ -127,6 +127,7 @@ export default {
     line-height: 49rem;
     font-size: 14rem;
     background: #fff;
+    box-shadow: 0 -1rem 1rem 0 $content-bgColor;
     &-pay {
         margin-left: 24rem;
         color: $content-fontColor;

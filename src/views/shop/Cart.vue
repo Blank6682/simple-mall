@@ -50,7 +50,6 @@
                     <div class="product-count">
                         <span
                             class="product-count-mius iconfont"
-                            v-if="item.count"
                             @click="
                                 changeCartItemInfo(shopId, item._id, item, -1)
                             "
@@ -80,29 +79,32 @@
                     {{ calculations.count }}
                 </div>
             </div>
-            <div class="check-total" v-if="calculations.count || !isShow">
+            <div class="check-total" v-if="!calculations.cartStatus">
                 总计：
                 <span class="check-total-price">
                     ￥{{ calculations.price }}
                 </span>
             </div>
-            <div class="check-total" v-if="!calculations.count && isShow">
+            <div class="check-total" v-if="calculations.cartStatus">
                 购物车是空的
             </div>
-            <div class="check-btn">
-                <router-link :to="{ path: `/orderConfirmation/${shopId}` }">
-                    去结算
-                </router-link>
+            <div
+                class="check-btn"
+                @click="handleSettlement(calculations.count)"
+            >
+                去结算
             </div>
         </div>
+        <Toast v-if="isShowToast" :message="toastMessage" />
     </div>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCartEffect } from '../../effects/CartEffect'
+import Toast, { useToastEffect } from '../../components/Toast.vue'
 
 //获取购物车信息逻辑
 const useShopCartInfoEffect = () => {
@@ -128,21 +130,38 @@ const useShopCartInfoEffect = () => {
     }
 }
 
+//处理去结算逻辑
+const useSettlementEffect = (showToast, shopId) => {
+    const router = useRouter()
+    const handleSettlement = (order) => {
+        console.log(order)
+        if (!order) {
+            showToast("你还没选择宝贝哦！")
+        } else {
+            router.push({ path: `/orderConfirmation/${shopId}` })
+        }
+    }
+    return { handleSettlement }
+}
+
 export default {
+    components: { Toast },
     name: "ShopCart",
     setup () {
         const route = useRoute()
         const shopId = route.params.id;
+        const isShow = ref(false)
+        const showShopCart = () => { isShow.value = !isShow.value }
+
+        const { isShowToast, toastMessage, showToast } = useToastEffect()
         const { changeCartItemChecked, clearCartProducts, changeCartProductsChecked, } = useShopCartInfoEffect(shopId);
         const { changeCartItemInfo, calculations, productList } = useCartEffect(shopId)
-        const isShow = ref(false)
-        const showShopCart = () => {
-            isShow.value = !isShow.value
-        }
+        const { handleSettlement } = useSettlementEffect(showToast, shopId)
+
         return {
             productList, shopId, changeCartItemInfo, calculations,
             changeCartItemChecked, clearCartProducts, changeCartProductsChecked,
-            showShopCart, isShow
+            showShopCart, isShow, handleSettlement, toastMessage, isShowToast
         }
     },
 }
@@ -206,11 +225,9 @@ export default {
         text-align: center;
         width: 98rem;
         background: $btn-bgColor;
-        a {
-            font-size: 14rem;
-            line-height: 49rem;
-            color: $bgColor;
-        }
+        font-size: 14rem;
+        line-height: 49rem;
+        color: $bgColor;
     }
 }
 .product {

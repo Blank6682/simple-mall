@@ -15,7 +15,7 @@
                 <div
                     class="address-list-item"
                     v-for="(item, index) in addressList"
-                    :key="item.id"
+                    :key="item + index"
                 >
                     <div class="address-contact">
                         <div class="address-contact-user">
@@ -41,6 +41,13 @@
 
 <script>
 import { useStore } from 'vuex'
+
+// //选择地址逻辑
+// const useChooseAddressEffect = () => {
+//     const handleChooseAddress=()=>{
+
+//     }
+// }
 export default {
     name: "MyAddressList",
     setup () {
@@ -63,7 +70,7 @@ export default {
         color: $content-fontColor;
     }
     &-create {
-        color: #000;
+        color: $darkColor;
     }
 }
 .address {
@@ -82,7 +89,7 @@ export default {
             border-radius: 4rem;
             color: $content-fontColor;
             background: $bgColor;
-            box-shadow: 0rem 2rem 4rem rgba($color: #000000, $alpha: 0.1);
+            box-shadow: 0rem -1rem 4rem 1rem rgba($color: #000000, $alpha: 0.1);
         }
     }
 

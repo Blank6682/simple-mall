@@ -14,7 +14,7 @@
             <div class="login-btn" @click="handleLogin">登录</div>
             <div class="login-link" @click="handleRegisterClick">立即注册</div>
         </div>
-        <Toast v-if="isShow" :message="toastMessage" />
+        <Toast v-if="isShowToast" :message="toastMessage" />
     </div>
 </template>
 
@@ -69,12 +69,12 @@ export default {
 
     // 职责就是告诉你，代码执行的一个流程
     setup () {
-        const { isShow, toastMessage, showToast } = useToastEffect()
+        const { isShowToast, toastMessage, showToast } = useToastEffect()
         const { mobile, password, handleLogin } = useLoginEffect(showToast)
         const { handleRegisterClick } = useRegisterEffec()
 
         return {
-            mobile, password, toastMessage, isShow,
+            mobile, password, toastMessage, isShowToast,
             handleLogin, handleRegisterClick,
         }
     }

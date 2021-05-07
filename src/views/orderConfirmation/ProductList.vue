@@ -3,10 +3,14 @@
         <div class="inventory">
             <h3 class="inventory-title">{{ shopName }}</h3>
             <div class="inventory-list">
-                <template v-for="item in productList" :key="item._id">
+                <template v-for="(item, index) in productList" :key="item._id">
                     <div
                         class="inventory-item"
-                        v-if="item.count && item.checked"
+                        v-if="
+                            item.count &&
+                            item.checked &&
+                            (index < 3 || showAllProduct)
+                        "
                     >
                         <img class="inventory-item-image" :src="item.imgUrl" />
                         <h4 class="inventory-item-title">{{ item.name }}</h4>
@@ -24,14 +28,19 @@
                 </template>
             </div>
             <div class="inventory-weight iconfont">
-                共计8件/4kg
-                <span class="inventory-weight-icon iconfont">&#xe919;</span>
+                共计{{ calculations.count }}件/{{ calculations.count * 0.25 }}kg
+                <span
+                    class="inventory-weight-icon iconfont"
+                    @click="handleShowAllProduct()"
+                    v-html="showAllProduct ? '&#xe604;' : '&#xe919;'"
+                ></span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartEffect } from '../../effects/CartEffect'
 export default {
@@ -39,8 +48,16 @@ export default {
     setup () {
         const route = useRoute()
         const shopId = route.params.id
-        const { shopName, productList } = useCartEffect(shopId)
-        return { shopName, productList }
+        const showAllProduct = ref(false)
+        const { shopName, productList, calculations } = useCartEffect(shopId)
+
+        console.log("🚀 ~ file: ProductList.vue ~ line 53 ~ setup ~ shopName", showAllProduct.value)
+        const handleShowAllProduct = () => {
+            showAllProduct.value = !showAllProduct.value
+        }
+
+
+        return { shopName, productList, showAllProduct, handleShowAllProduct, calculations }
     }
 }
 </script>
