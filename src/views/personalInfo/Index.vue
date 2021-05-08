@@ -1,25 +1,27 @@
 <template>
-    <div class="warper">
+    <div class="personal">
         <PersonalInfo />
+        <ContentBar />
         <FooterTapBar :currentIndex="3" />
     </div>
 </template>
 
 <script>
 import FooterTapBar from '../../components/FooterTapBar.vue'
+import ContentBar from './ContentBar.vue'
 import PersonalInfo from './PersonalInfo.vue'
 
 export default {
     name: "personalInfo",
-    components: { FooterTapBar, PersonalInfo },
+    components: { FooterTapBar, PersonalInfo, ContentBar },
 }
 </script>
 <style>
-.warper {
+.personal {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 49px;
 }
 </style>

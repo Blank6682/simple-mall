@@ -25,7 +25,7 @@ export default {
     setup () {
         const dockerList = reactive([
             { title: "首页", icon: "&#xe752;", to: { name: "Home" } },
-            { title: "购物车", icon: "&#xe64e;", to: {} },
+            { title: "购物车", icon: "&#xe64e;", to: { name: "CartList" } },
             { title: "订单", icon: "&#xe600;", to: { name: "OrderList" } },
             { title: "我的", icon: "&#xe63c;", to: { name: "PersonalInfo" } },
         ])

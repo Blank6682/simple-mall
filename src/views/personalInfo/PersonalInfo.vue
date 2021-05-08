@@ -8,12 +8,15 @@
                 src="https://ccp-bj29-bj-1592982087.oss-cn-beijing.aliyuncs.com/pds%2Favatar%2F33717d343da64de18889d6b3108b47c3?x-oss-access-key-id=LTAIsE5mAn2F493Q&x-oss-expires=1620376923&x-oss-signature=37267HoCPDoCwdUHKsdzRFNrxhrYCU9%2BiaaafiX4Qkg%3D&x-oss-signature-version=OSS2"
                 alt=""
             />
-            <div class="user-info-name">热心市民李先生</div>
-            <div class="user-grade">
-                <div class="user-grade-icon iconfont">&#xe619;</div>
-                <span class="user-grade-number">16</span>
+            <div class="user-info-name">
+                热心市民李先生
+                <div class="user-grade">
+                    <div class="user-grade-icon iconfont">&#xe619;</div>
+                    <span class="user-grade-number">16</span>
+                </div>
             </div>
-            <p class="uesr-info-id">ID:1069643013</p>
+
+            <p class="user-info-id">ID:1069643013</p>
             <div class="user-info-property">
                 <ul class="user-property">
                     <li>
@@ -40,28 +43,24 @@
 
 <script>
 export default {
-    name: "PersonalInfo"
+    name: "PersonalInfo",
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
 .user {
-    // &-bg {
-    //     position: absolute;
-    //     top: -400px;
-    //     left: -110px;
-    //     width: 600px;
-    //     height: 600px;
-    //     border-radius: 50%;
-    //     background-image: linear-gradient(239deg, #3a6ff3 0%, #50c7fb 100%);
-    // }
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 59px;
-    background-color: #eee;
+    position: relative;
+    overflow: hidden;
+    &-bg {
+        position: absolute;
+        width: 200%;
+        height: 160%;
+        transform-origin: center;
+        transform: translate(-25%, -50%);
+        border-radius: 50%;
+        background-image: linear-gradient(239deg, #3a6ff3 0%, #50c7fb 100%);
+    }
     &-edit {
         position: absolute;
         top: 40px;
@@ -71,11 +70,9 @@ export default {
     }
     &-info {
         position: relative;
-        margin: 0 18rem 0 18rem;
-        margin-top: 90px;
+        margin: 90rem 18rem 0 18rem;
         background: $bgColor;
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
-        border-radius: 8px;
         border-radius: 8px;
         &-img {
             position: absolute;
@@ -88,24 +85,34 @@ export default {
             z-index: 100;
         }
         &-name {
-            position: absolute;
-            top: 59rem;
-            display: flex;
+            // position: absolute;
+            // top: 59rem;
+            padding-top: 59rem;
             font-size: 24px;
             color: #262628;
             text-align: center;
         }
+        &-id {
+            margin: 2px 0 12px 0;
+            font-size: 14px;
+            color: #c1c0c9;
+            text-align: center;
+        }
     }
     &-grade {
+        position: absolute;
+        top: 65px;
+        right: 26px;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 35px;
+        margin-left: 6px;
+        width: 40px;
         height: 15px;
         background-image: linear-gradient(180deg, #bee700 0%, #8aca00 100%);
         border-radius: 7.5px;
         &-icon {
-            margin-right: 1px;
+            margin-right: 2px;
             width: 15px;
             height: 15px;
             font-size: 7px;
@@ -117,11 +124,27 @@ export default {
         }
         &-number {
             font-size: 10px;
-            color: $bgColor;
+            color: #262628;
         }
     }
     &-property {
         display: flex;
+        padding-left: 0;
+        text-align: center;
+        border-top: 1px solid #f1f1f1;
+        &-title {
+            font-size: 12px;
+            color: #c1c0c9;
+            margin-top: 12px;
+        }
+        &-number {
+            margin: 3px 0 16px 0;
+            font-size: 20pxpx;
+            color: #666;
+        }
+        li {
+            flex: 1;
+        }
     }
 }
 </style>

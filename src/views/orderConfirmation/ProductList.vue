@@ -3,15 +3,8 @@
         <div class="inventory">
             <h3 class="inventory-title">{{ shopName }}</h3>
             <div class="inventory-list">
-                <template v-for="(item, index) in productList" :key="item._id">
-                    <div
-                        class="inventory-item"
-                        v-if="
-                            item.count &&
-                            item.checked &&
-                            (index < 3 || showAllProduct)
-                        "
-                    >
+                <template v-for="item in showPruductList" :key="item._id">
+                    <div class="inventory-item">
                         <img class="inventory-item-image" :src="item.imgUrl" />
                         <h4 class="inventory-item-title">{{ item.name }}</h4>
 
@@ -27,11 +20,13 @@
                     </div>
                 </template>
             </div>
-            <div class="inventory-weight iconfont">
+            <div
+                class="inventory-weight iconfont"
+                @click="showAllProduct = !showAllProduct"
+            >
                 共计{{ calculations.count }}件/{{ calculations.count * 0.25 }}kg
                 <span
                     class="inventory-weight-icon iconfont"
-                    @click="handleShowAllProduct()"
                     v-html="showAllProduct ? '&#xe604;' : '&#xe919;'"
                 ></span>
             </div>
@@ -40,9 +35,41 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartEffect } from '../../effects/CartEffect'
+
+//处理列表展示内容相关逻辑
+const useShowProductListEffect = (showAllProduct, productList) => {
+    //展示的列表
+    const showPruductList = computed(() => {
+        let list = []
+        let count = 0
+        if (showAllProduct) {
+            //默认2个
+            for (const item in productList.value) {
+                if (productList.value[item].count && productList.value[item].checked && count < 2) {
+                    count++
+                    list.push(productList.value[item])
+                }
+            }
+        } else {
+            //显示所有
+            for (const item in productList.value) {
+                if (productList.value[item].count && productList.value[item].checked) {
+                    list.push(productList.value[item])
+                }
+            }
+        }
+
+        return list
+    })
+    //展开/收起
+    const handleShowAllProduct = () => {
+        showAllProduct.value = !showAllProduct.value
+    }
+    return { showPruductList, handleShowAllProduct }
+}
 export default {
     name: "ProductList",
     setup () {
@@ -51,13 +78,9 @@ export default {
         const showAllProduct = ref(false)
         const { shopName, productList, calculations } = useCartEffect(shopId)
 
-        console.log("🚀 ~ file: ProductList.vue ~ line 53 ~ setup ~ shopName", showAllProduct.value)
-        const handleShowAllProduct = () => {
-            showAllProduct.value = !showAllProduct.value
-        }
+        const { showPruductList, handleShowAllProduct } = useShowProductListEffect(showAllProduct, productList)
 
-
-        return { shopName, productList, showAllProduct, handleShowAllProduct, calculations }
+        return { shopName, productList, showAllProduct, handleShowAllProduct, calculations, showPruductList }
     }
 }
 </script>
