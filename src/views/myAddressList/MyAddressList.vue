@@ -10,34 +10,39 @@
             </router-link>
         </div>
         <div class="address">
-            <p class="address-title">我的收获地址</p>
-            <div class="address-list">
-                <div
-                    class="address-list-item"
-                    v-for="(item, index) in addressList"
-                    :key="item + index"
-                >
-                    <div class="address-contact">
-                        <div class="address-contact-user">
-                            {{ item.uesrName }}
+            <p class="address-tip" v-if="Object.keys(addressList).length === 0">
+                暂无收获地址
+            </p>
+            <template v-else>
+                <p class="address-title">我的收获地址</p>
+                <div class="address-list">
+                    <div
+                        class="address-list-item"
+                        v-for="(item, index) in addressList"
+                        :key="item + index"
+                    >
+                        <div class="address-contact">
+                            <div class="address-contact-user">
+                                {{ item.uesrName }}
+                            </div>
+                            <div class="address-contact-phone">
+                                {{ item.phone }}
+                            </div>
                         </div>
-                        <div class="address-contact-phone">
-                            {{ item.phone }}
+                        <div class="address-details">
+                            {{ item.city }}
+                            {{ item.community }}
+                            {{ item.floorNumber }}
                         </div>
+                        <router-link :to="`/setAddress/${index}`">
+                            <span class="address-icon iconfont"> &#xe665;</span>
+                        </router-link>
                     </div>
-                    <div class="address-details">
-                        {{ item.city }}
-                        {{ item.community }}
-                        {{ item.floorNumber }}
-                    </div>
-                    <router-link :to="`/setAddress/${index}`">
-                        <span class="address-icon iconfont"> &#xe665;</span>
-                    </router-link>
                 </div>
-            </div>
+            </template>
         </div>
     </div>
-</template>p
+</template>
 
 <script>
 import { useStore } from 'vuex'

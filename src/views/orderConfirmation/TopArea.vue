@@ -25,8 +25,16 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
 export default {
-    name: "topArea"
+    name: "topArea",
+    setup () {
+        const store = useStore()
+        const addressList = store.state.addressList
+        const defaultAddressInfo = addressList.find(item => item.defaultAddress == "true")
+        return { addressList, defaultAddressInfo }
+    }
+
 }
 </script>
 

@@ -14,7 +14,7 @@
         <div class="content">
             <div class="content-item">
                 <label>所在城市：</label>
-                <input type="text" v-model="item.city" placeholder="如北京" />
+                <input type="text" v-model="item.city" placeholder="如广州市" />
             </div>
             <div class="content-item">
                 <label> 小区/大厦/学校：</label>
@@ -48,6 +48,21 @@
                     placeholder="请填写收货手机号码"
                 />
             </div>
+            <div class="content-item content-item-select">
+                <label> 默认地址：</label>
+                <input
+                    type="radio"
+                    name="defaultAddress"
+                    value="true"
+                    v-model="item.defaultAddress"
+                />是
+                <input
+                    type="radio"
+                    name="defaultAddress"
+                    value="false"
+                    v-model="item.defaultAddress"
+                />否
+            </div>
         </div>
     </div>
 </template>
@@ -67,7 +82,8 @@ export default {
             community: "",
             floorNumber: "",
             uesrName: "",
-            phone: ""
+            phone: "",
+            defaultAddress: "false"
         })
         const addressId = route.params.id
         if (addressId != -1) {
@@ -79,7 +95,6 @@ export default {
         }
         return { item, handleSaveAddress, addressId }
     }
-
 }
 </script>
 
@@ -99,6 +114,7 @@ export default {
 .content {
     margin: 0 18rem;
     font-size: 14rem;
+    border-bottom: 1rem solid rgba($color: #000000, $alpha: 0.2);
     &-item {
         display: flex;
         padding: 12rem 0;
@@ -110,6 +126,12 @@ export default {
             border: none;
             outline: none;
         }
+    }
+    &-item:last-child {
+        border: none;
+    }
+    &-item-select {
+        max-width: 200px;
     }
 }
 </style>

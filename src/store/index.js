@@ -101,10 +101,25 @@ export default createStore({
             //是否新建
             if (addressId == -1) {
                 const length = state.addressList.length
+                state.addressList.forEach(item => {
+                    item.defaultAddress = false
+                });
+                if (length == 0) {
+                    addressInfo.defaultAddress = true
+                }
                 state.addressList.splice(length, length, addressInfo)
                 setLocalStorageAddressList(state)
             } else {
                 state.addressList[addressId] = addressInfo
+                console.log(addressInfo)
+                if (addressInfo.defaultAddress == true) {
+                    state.addressList.forEach((item, index) => {
+                        if (index != addressId) {
+                            item.defaultAddress = false
+                        }
+                    });
+                }
+                console.log(state.addressList)
                 setLocalStorageAddressList(state)
             }
         }
