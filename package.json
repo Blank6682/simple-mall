@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "serve": "set NODE_OPTIONS=--openssl-legacy-provider & vue-cli-service serve",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider & vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "browserslist": "^4.21.3",
+    "caniuse-lite": "^1.0.30001374",
     "core-js": "^3.6.5",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
