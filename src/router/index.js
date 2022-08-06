@@ -11,7 +11,7 @@ const routes = [
         path: '/login',
         name: 'Login',
         //异步路由加载
-        component: () => import(/* webpackChunkName: "login" */ '../views/login/Login.vue'),
+        component: () => import('../views/login/Login.vue'),
         //进入到这个路由之前会执行
         beforeEnter: (to, from, next) => {
             //已登录则跳转到主页
@@ -22,46 +22,46 @@ const routes = [
     {
         path: "/register",
         name: "Register",
-        component: () => import(/* webpackChunkName: "register" */'../views/register/Register.vue'),
+        component: () => import('../views/register/Register.vue'),
     },
     {
         path: "/shop/:id",
         name: "Shop",
-        component: () => import(/* webpackChunkName: "shop" */'../views/shop/Shop.vue'),
+        component: () => import('../views/shop/Shop.vue'),
 
     },
     {
         path: "/orderConfirmation/:id",
         name: "OrderConfirmation",
-        component: () => import(/* webpackChunkName: "shopConfirmation" */'../views/orderConfirmation/Index.vue'),
+        component: () => import('../views/orderConfirmation/Index.vue'),
 
     },
     {
         path: "/SetAddress/:id",
         name: "SetAddress",
-        component: () => import(/* webpackChunkName: "SetAddress" */'../views/setAddress/SetAddress.vue'),
+        component: () => import('../views/setAddress/SetAddress.vue'),
 
     },
     {
         path: "/MyAddressList",
         name: "MyAddressList",
-        component: () => import(/* webpackChunkName: "MyAddressList" */'../views/myAddressList/MyAddressList.vue'),
+        component: () => import('../views/myAddressList/MyAddressList.vue'),
 
     },
     {
         path: "/CartList",
         name: "CartList",
-        component: () => import(/* webpackChunkName: "CartList" */'../views/cartList/CartList.vue'),
+        component: () => import('../views/cartList/CartList.vue'),
     },
     {
         path: "/OrderList",
         name: "OrderList",
-        component: () => import(/* webpackChunkName: "OrderList" */'../views/orderList/OrderList.vue'),
+        component: () => import('../views/orderList/OrderList.vue'),
     },
     {
         path: "/PersonalInfo",
         name: "PersonalInfo",
-        component: () => import(/* webpackChunkName: "PersonalInfo" */'../views/personalInfo/Index.vue'),
+        component: () => import('../views/personalInfo/Index.vue'),
     }
 ]
 

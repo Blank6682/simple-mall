@@ -82,7 +82,7 @@ const useMakeOrderEffect = (shopId, shopName, productList, address) => {
                 router.push({ name: "OrderList" })
             }
         } catch (e) {
-            console.log(e)
+            throw Error(e)
         }
     }
     return { handleConfirmOrder }

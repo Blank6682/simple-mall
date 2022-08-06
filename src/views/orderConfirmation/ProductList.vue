@@ -22,12 +22,12 @@
             </div>
             <div
                 class="inventory-weight iconfont"
-                @click="showAllProduct = !showAllProduct"
+                @click="handleShowAllProduct"
             >
                 共计{{ calculations.count }}件/{{ calculations.count * 0.25 }}kg
                 <span
                     class="inventory-weight-icon iconfont"
-                    v-html="showAllProduct ? '&#xe604;' : '&#xe919;'"
+                    v-html="showMore"
                 ></span>
             </div>
         </div>
@@ -35,28 +35,29 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref} from 'vue'
 import { useRoute } from 'vue-router'
 import { useCartEffect } from '../../effects/CartEffect'
 
 //处理列表展示内容相关逻辑
 const useShowProductListEffect = (showAllProduct, productList) => {
+    
     //展示的列表
     const showPruductList = computed(() => {
         let list = []
         let count = 0
-        if (showAllProduct) {
-            //默认2个
+        if (showAllProduct.value) {
+            //显示所有
             for (const item in productList.value) {
-                if (productList.value[item].count && productList.value[item].checked && count < 2) {
-                    count++
+                if (productList.value[item].count && productList.value[item].checked) {
                     list.push(productList.value[item])
                 }
             }
         } else {
-            //显示所有
+             //默认3个
             for (const item in productList.value) {
-                if (productList.value[item].count && productList.value[item].checked) {
+                if (productList.value[item].count && productList.value[item].checked && count < 3) {
+                    count++
                     list.push(productList.value[item])
                 }
             }
@@ -64,10 +65,12 @@ const useShowProductListEffect = (showAllProduct, productList) => {
 
         return list
     })
+
     //展开/收起
     const handleShowAllProduct = () => {
         showAllProduct.value = !showAllProduct.value
     }
+
     return { showPruductList, handleShowAllProduct }
 }
 export default {
@@ -78,9 +81,23 @@ export default {
         const showAllProduct = ref(false)
         const { shopName, productList, calculations } = useCartEffect(shopId)
 
-        const { showPruductList, handleShowAllProduct } = useShowProductListEffect(showAllProduct, productList)
+        const { showPruductList , handleShowAllProduct } = useShowProductListEffect(showAllProduct, productList)
 
-        return { shopName, productList, showAllProduct, handleShowAllProduct, calculations, showPruductList }
+        const showMore = computed(() => {
+            let len = 0
+            for(const item in productList.value) len++
+            return len > 3 ? (showAllProduct.value ? '&#xe604;' : '&#xe919;') :''
+        })
+
+        return {
+            shopName,
+            productList,
+            showAllProduct,
+            calculations,
+            showPruductList,
+            showMore,
+            handleShowAllProduct,
+        }
     }
 }
 </script>

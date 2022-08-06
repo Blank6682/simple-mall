@@ -97,7 +97,7 @@ const useShopListEffect = (currentTab, shopId) => {
     //获取商品列表
     const getGoodsList = async () => {
         const result = await get(`/api/shop/${shopId}/products`, { tab: currentTab.value })
-        console.log("🚀 ~ file: Content.vue ~ line 100 ~ getGoodsList ~ result", result)
+        
         if (result.errno == 0 && result.data.length) {
             data.goodsList = result.data
         }

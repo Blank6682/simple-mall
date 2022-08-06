@@ -79,7 +79,6 @@ export default createStore({
         },
         //收货地址设置
         handleSaveAddress (state, payload) {
-            console.log(payload,"1");
             const { addressInfo, addressId } = payload
             
             //是否新建

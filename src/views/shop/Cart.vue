@@ -134,7 +134,7 @@ const useShopCartInfoEffect = () => {
 const useSettlementEffect = (showToast, shopId) => {
     const router = useRouter()
     const handleSettlement = (order) => {
-        console.log(order)
+
         if (!order) {
             showToast("你还没选择宝贝哦！")
         } else {

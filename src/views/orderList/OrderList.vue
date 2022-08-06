@@ -52,24 +52,28 @@ const useOrderListEffrct = () => {
         const result = await get('/api/order')
         if (result.errno === 0 && result?.data?.length) {
             const orderList = result.data //订单列表
+
             orderList.forEach((order) => {
                 const products = order.products || [] //单个订单中的商品
                 let totalNumber = 0
                 let totalPrice = 0
+
                 //遍历计算总价和总数
                 products.forEach((productItem) => {
                     totalNumber += (productItem?.orderSales || 0)
                     totalPrice += (productItem?.product?.price * productItem?.orderSales || 0)
                 })
+                
                 order.totalNumber = totalNumber
                 order.totalPrice = totalPrice
             })
+
             data.list = result.data
         }
     }
     getNearShopList();
     const { list } = toRefs(data)
-    console.log(list)
+
     return { list }
 }
 export default {
