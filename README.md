@@ -16,9 +16,9 @@
 - 获取项目代码
 
 ```bash
-git clone https://github.com/Blank6682/mall-dome.git
+git clone https://github.com/Blank6682/simple-mall.git
 or
-git clone git@github.com:Blank6682/mall-dome.git
+git clone git@github.com:Blank6682/simple-mall.git
 
 ```
 
