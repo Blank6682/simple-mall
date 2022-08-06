@@ -54,7 +54,7 @@
 
 <script>
 import { useStore } from 'vuex'
-import { useAddressEffect } from '../../effects/addressEffect';
+import { useAddressEffect } from '../../effects/AddressEffect';
 
 // //选择地址逻辑
 // const useChooseAddressEffect = () => {
