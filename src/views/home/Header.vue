@@ -1,8 +1,11 @@
 <template>
-    <div class="herder">
+    <div class="head">
         <div class="address">
-            <span class="address-icon iconfont">&#xe636;</span>
-            北京理工大学国防科技园2号楼10层
+            <div class="address-left">
+                <span class="address-left-icon iconfont">&#xe636;</span>
+                <span> 广州市天河区天河城</span>
+            </div>
+
             <div class="news iconfont">&#xe63d;</div>
         </div>
         <div class="searchbar">
@@ -22,21 +25,23 @@ export default {
 <style lang="scss" scoped>
 @import "../../style/viriablles.scss";
 @import "../../style/mixins.scss";
-.herder {
+.head {
     padding-top: 12rem;
     color: $content-fontColor;
     .address {
         display: flex;
-        justify-content: space-between;
+        justify-content:space-between;
         align-items: center;
         position: relative;
         font-size: 16rem;
         line-height: 22rem;
         @include ellipsis;
-        &-icon {
+        &-left{
+            &-icon {
             position: relative;
             top: 1rem;
-            margin-right: 8.5rem;
+            margin-right: 7rem;
+            }
         }
     }
     .iconfont {

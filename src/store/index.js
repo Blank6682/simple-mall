@@ -1,38 +1,20 @@
 import { createStore } from 'vuex'
-
-
-const setLocalStorageCartList = (state) => {
-    const { cartList } = state
-    const cartListString = JSON.stringify(cartList)
-    localStorage.cartList = cartListString
-}
-const getLocalCartList = () => {
-    try {
-        return JSON.parse(localStorage.cartList)
-    } catch (e) {
-        return {}
-    }
-}
-const setLocalStorageAddressList = (state) => {
-    const { addressList } = state
-    const addressListString = JSON.stringify(addressList)
-    localStorage.addressList = addressListString
-}
-const getLocalAddressList = () => {
-    try {
-        return JSON.parse(localStorage.addressList)
-    } catch (e) {
-        return []
-    }
-}
+import { getLocal ,setLocal } from '../utils/useLocalStorage';
 
 
 export default createStore({
     state: {
         //购物车数据结构 cartList: {shopId :{shopName:"",addressId:"",productList:{}}}
         //第一层是商店Id：shopId  第二层是商店名和地址及其内容 {shopName:"",productList:{}}
-        cartList: getLocalCartList(),
-        addressList: getLocalAddressList()
+        cartList: getLocal('cartList') || {},
+        addressList: getLocal('addressList') ||[{
+            'city': "广州市",
+            'community': "天河区",
+            'defaultAddress': true,
+            'floorNumber': "天河城1号楼1117号",
+            'phone': "136666888",
+            'userName': "吴先生",
+        }]//模拟初始地址数据
     },
     getters: {
     },
@@ -62,7 +44,7 @@ export default createStore({
             //把信息添加到cartList
             shopInfo.productList[productId] = product
             state.cartList[shopId] = shopInfo
-            setLocalStorageCartList(state)
+            setLocal(state,'carList')
         },
 
         //商品的选择
@@ -70,14 +52,14 @@ export default createStore({
             const { shopId, productId } = payload
             let shopInfo = state.cartList[shopId]
             shopInfo.productList[productId].checked = !shopInfo.productList[productId].checked
-            setLocalStorageCartList(state)
+            setLocal(state,'carList')
         },
 
         //清空购物车
         clearCartProducts (state, payload) {
             const { shopId } = payload
             state.cartList[shopId].productList = {};
-            setLocalStorageCartList(state)
+            setLocal(state,'carList')
         },
 
         //全选
@@ -87,41 +69,70 @@ export default createStore({
             for (let i in cartList) {
                 cartList[i].checked = isCheckedAll;
             }
-            setLocalStorageCartList(state)
+            setLocal(state,'carList')
         },
         //收货地址选择
         chooseAddress (state, payload) {
             const { addressId } = payload
             state.cartList.addressId = addressId
-            setLocalStorageCartList(state)
+            setLocal(state,'carList')
         },
         //收货地址设置
         handleSaveAddress (state, payload) {
+            console.log(payload,"1");
             const { addressInfo, addressId } = payload
+            
             //是否新建
             if (addressId == -1) {
-                const length = state.addressList.length
-                state.addressList.forEach(item => {
-                    item.defaultAddress = false
-                });
-                if (length == 0) {
-                    addressInfo.defaultAddress = true
+                let len = state.addressList.length
+                state.addressList.splice(len, 1, addressInfo)
+
+                if (len === 1) {
+                    state.addressList[0].defaultAddress = true
+                } else if(addressInfo.defaultAddress === 'true') {
+                    state.addressList.forEach(item => {
+                        item.defaultAddress = false
+                    });
+                    state.addressList[len].defaultAddress = true
                 }
-                state.addressList.splice(length, length, addressInfo)
-                setLocalStorageAddressList(state)
+
+                setLocal(state,'addressList')
             } else {
                 state.addressList[addressId] = addressInfo
-                console.log(addressInfo)
-                if (addressInfo.defaultAddress == true) {
+            
+                if (addressInfo.defaultAddress === 'true') {
                     state.addressList.forEach((item, index) => {
-                        if (index != addressId) {
+                        if (index !== addressId) {
                             item.defaultAddress = false
                         }
                     });
+                    state.addressList[addressId].defaultAddress = true
+                } else {
+                    state.addressList[addressId].defaultAddress = false
+                    let flag = state.addressList.find(i => {
+                        i.defaultAddress ==true
+                    })
+                    if (!flag) {
+                        state.addressList[0].defaultAddress = true
+                    }
                 }
-                console.log(state.addressList)
-                setLocalStorageAddressList(state)
+
+                setLocal(state,'addressList')
             }
+        },
+        deleteAddress(state, payload) {
+
+            let len = state.addressList.length
+            
+            if (state.addressList[payload].defaultAddress && len >= 2) {
+                state.addressList.splice(payload, 1)
+                state.addressList[0].defaultAddress = true
+            } else  {
+                state.addressList.splice(payload, 1)
+            }
+
+            setLocal(state, 'addressList')
+            getLocal(state, 'addressList')
         }
     },
     actions: {

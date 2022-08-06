@@ -7,20 +7,20 @@
             <h3 class="head-title">
                 {{ $route.params.id == -1 ? "新建" : "编辑" }}收货地址
             </h3>
-            <span class="head-save" @click="handleSaveAddress(item, addressId)"
+            <span class="head-save" @click="handleSaveAddress(addressInfo, addressId)"
                 >保存</span
             >
         </div>
         <div class="content">
             <div class="content-item">
                 <label>所在城市：</label>
-                <input type="text" v-model="item.city" placeholder="如广州市" />
+                <input type="text" v-model="addressInfo.city" placeholder="如广州市" />
             </div>
             <div class="content-item">
                 <label> 小区/大厦/学校：</label>
                 <input
                     type="text"
-                    v-model="item.community"
+                    v-model="addressInfo.community"
                     placeholder="如理工大学国防科技园"
                 />
             </div>
@@ -28,7 +28,7 @@
                 <label> 楼号-门牌号：</label>
                 <input
                     type="text"
-                    v-model="item.floorNumber"
+                    v-model="addressInfo.floorNumber"
                     placeholder="A号楼B层"
                 />
             </div>
@@ -36,7 +36,7 @@
                 <label> 收货人：</label>
                 <input
                     type="text"
-                    v-model="item.uesrName"
+                    v-model="addressInfo.userName"
                     placeholder="请填写收货人的姓名"
                 />
             </div>
@@ -44,7 +44,7 @@
                 <label> 联系电话：</label>
                 <input
                     type="text"
-                    v-model="item.phone"
+                    v-model="addressInfo.phone"
                     placeholder="请填写收货手机号码"
                 />
             </div>
@@ -53,14 +53,14 @@
                 <input
                     type="radio"
                     name="defaultAddress"
-                    value="true"
-                    v-model="item.defaultAddress"
+                    value=true
+                    v-model="addressInfo.defaultAddress"
                 />是
                 <input
                     type="radio"
                     name="defaultAddress"
-                    value="false"
-                    v-model="item.defaultAddress"
+                    value=false
+                    v-model="addressInfo.defaultAddress"
                 />否
             </div>
         </div>
@@ -77,23 +77,23 @@ export default {
         const store = useStore()
         const router = useRouter()
         const route = useRoute()
-        let item = reactive({
+        let addressInfo = reactive({
             city: "",
             community: "",
             floorNumber: "",
-            uesrName: "",
+            userName: "",
             phone: "",
             defaultAddress: "false"
         })
         const addressId = route.params.id
         if (addressId != -1) {
-            item = store.state.addressList[addressId]
+            addressInfo = store.state.addressList[addressId]
         }
         const handleSaveAddress = (addressInfo, addressId) => {
             store.commit("handleSaveAddress", { addressInfo, addressId })
             router.back(-1)
         }
-        return { item, handleSaveAddress, addressId }
+        return { addressInfo, handleSaveAddress, addressId }
     }
 }
 </script>

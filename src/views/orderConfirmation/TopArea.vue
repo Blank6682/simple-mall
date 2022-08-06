@@ -8,13 +8,13 @@
                 确认订单
             </div>
             <div class="top-receive">
-                <h3 class="top-receive-title">收获地址</h3>
+                <h3 class="top-receive-title">收货地址</h3>
                 <div class="top-receive-address">
-                    北京理工大学国防科技园2号楼10层
+                    {{defaultAddressInfo.city+defaultAddressInfo.community+defaultAddressInfo.floorNumber}}
                 </div>
                 <div class="top-receive-contact">
-                    <span>瑶妹（先生） </span>
-                    <span>18911024266</span>
+                    <span>{{defaultAddressInfo.userName}}</span>
+                    <span>{{defaultAddressInfo.phone}}</span>
                 </div>
                 <router-link :to="{ path: '/MyAddressList' }">
                     <span class="top-receive-icon iconfont"> &#xe665;</span>
@@ -30,8 +30,9 @@ export default {
     name: "topArea",
     setup () {
         const store = useStore()
-        const addressList = store.state.addressList
-        const defaultAddressInfo = addressList.find(item => item.defaultAddress == "true")
+        const addressList = store.state.addressList || []
+        const defaultAddressInfo = addressList.find(item => item.defaultAddress == true)
+
         return { addressList, defaultAddressInfo }
     }
 
@@ -79,6 +80,10 @@ export default {
             margin-bottom: 6rem;
         }
         &-contact {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 12rem;
             color: #666;
         }
