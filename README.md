@@ -16,9 +16,9 @@
 - 获取项目代码
 
 ```bash
-git clone https://github.com/Blank6682/vue3-jingdong.git
+git clone https://github.com/Blank6682/mall-dome.git
 or
-git clone git@github.com:Blank6682/vue3-jingdong.git
+git clone git@github.com:Blank6682/mall-dome.git
 
 ```
 
