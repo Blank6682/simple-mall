@@ -1,7 +1,9 @@
-# mall-dome
+# Simple Mall
 ## 简介
 
 **技术栈：Vue3 + Vuex**
+
+**[在线预览](https://simple-mall.vercel.app/#/)**
 
 使用vue3开发的一个简易的购物应用，购物车和地址模块使用vuex进行状态管理，主要完成前端部分：
 
